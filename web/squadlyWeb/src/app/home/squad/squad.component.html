@@ -1,0 +1,8 @@
+<div class="squad-container mb-0 pl-5" #squadContainer>
+  <div *ngFor="let squad of squads" class="squad-tab text-left">
+    <button class="btn squad-tab-button" (click)="setSelectedSquad(squad)"
+      [ngClass]="selectedSquad.squad_id === squad.squad_id ? 'squad-tab-button-active' : 'squad-tab-button'">{{squad.squad_name}}
+    </button>
+    <hr [ngClass]="selectedSquad.squad_id === squad.squad_id ? 'squad-line-active' : 'squad-line'">
+  </div>
+</div>
