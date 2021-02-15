@@ -19,6 +19,12 @@
     "web": { "tags": [] },
     "web-e2e": { "tags": [], "implicitDependencies": ["web"] },
     "api": { "tags": [] },
-    "api-interfaces": { "tags": [] }
+    "api-interfaces": { "tags": [] },
+    "core": { "tags": [] }
+  },
+  "paths":{
+    "@core": [
+      "libs/core/src/lib/*"
+    ]
   }
 }

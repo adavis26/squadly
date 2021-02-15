@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppGateway } from './app.gateway';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ChatModule } from './modules/chat/chat.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ChatModule,
+    DatabaseModule
+  ],
+  controllers: [],
+  providers: [AppGateway],
 })
 export class AppModule {}

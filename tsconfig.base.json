@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@squadly/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@squadly/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@squadly/core": ["libs/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
