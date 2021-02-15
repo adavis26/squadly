@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { select, Store, Action } from '@ngrx/store';
+import { MessageDTO } from 'libs/core/src/lib/interfaces';
 
 import * as ChatActions from './chat.actions';
 import * as ChatFeature from './chat.reducer';
@@ -23,6 +24,10 @@ export class ChatFacade {
    * or more tasks in your Effects.
    */
   init() {
-    this.store.dispatch(ChatActions.init());
+    this.store.dispatch(ChatActions.init({ chatId: 1 }));
+  }
+
+  sendChat(message: MessageDTO) {
+    this.store.dispatch(ChatActions.sendMessage({ message }));
   }
 }

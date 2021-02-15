@@ -4,3 +4,9 @@ export interface Message {
     userId: number;
     timestamp: Date;
 }
+
+export interface MessageDTO {
+    content: string;
+    userId: number;
+    chatId: number;
+  }

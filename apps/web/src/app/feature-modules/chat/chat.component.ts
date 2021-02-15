@@ -20,9 +20,11 @@ export class ChatComponent implements OnInit {
 
   public chat$ = this.chatFacade.allChat$;
 
-  constructor(private chatFacade: ChatFacade) {
-    this.chat$.subscribe(d => console.log(d));
+  constructor(private chatFacade: ChatFacade) {}
+
+  ngOnInit(): void {
+    this.chatFacade.init();
   }
 
-  ngOnInit(): void {}
+  public sendMessage() {}
 }

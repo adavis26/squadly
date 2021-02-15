@@ -1,16 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpService } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  public baseurl = 'localhost:3000';
+  public baseurl = '/api';
 
-  constructor(private httpService: HttpService) {}
+  constructor(private http: HttpClient,) {}
 
   public getChat(chatId: number): Observable<any> {
-    return this.httpService.get(this.baseurl);
+    return this.http.get(`${this.baseurl}/chat/${chatId}`);
   }
 }

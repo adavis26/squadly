@@ -1,13 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Message } from '../../../entity/messages.entity';
-import { Chat } from '../../../../../../libs/core/src/lib/interfaces';
+import { Chat, MessageDTO } from '../../../../../../libs/core/src/lib/interfaces';
 import { ChatService } from './chat.service';
-
-export interface MessageDTO {
-  content: string;
-  userId: number;
-  chatId: number;
-}
 
 @Controller('chat')
 export class ChatController {

@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChatService } from './services/chat.service';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpService } from '@nestjs/common';
 
 const matModules = [
   MatInputModule,
