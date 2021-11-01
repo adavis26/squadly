@@ -1,11 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import {
-  Chat,
-  MessageDTO,
-} from '../../../../../../../libs/core/src/lib/interfaces';
+import { Chat, MessageDTO } from '../../../../../../../libs/core/src/';
 
-export const init = createAction(
-  '[Chat Page] Init',
+export const loadChat = createAction(
+  '[Chat Page] Load Chat',
   props<{ chatId: number }>()
 );
 

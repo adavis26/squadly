@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": [],
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "paths": {
+      "@squadly/core": ["../../../libs/core/src/index"]
+    }
   },
   "files": ["src/main.ts", "src/polyfills.ts"]
 }

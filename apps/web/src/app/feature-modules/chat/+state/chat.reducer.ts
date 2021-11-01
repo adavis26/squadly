@@ -1,15 +1,15 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-
 import * as ChatActions from './chat.actions';
 import { Chat } from '../../../../../../../libs/core/src/lib/interfaces';
 
 export const CHAT_FEATURE_KEY = 'chat';
 
-export interface State extends Chat {
-  selectedId?: string | number; // which Chat record has been selected
-  loaded: boolean; // has the Chat list been loaded
-  error?: string | null; // last known error (if any)
+export interface State {
+  chats: Chat[];
+  selectedChat?: Chat;
+  loaded: boolean;
+  loading: boolean;
+  error?: string | null;
 }
 
 export interface ChatPartialState {
@@ -17,19 +17,32 @@ export interface ChatPartialState {
 }
 
 const initialState = {
+  chats: [],
   loaded: false,
-  messages: [],
-  members: []
-}
+  loading: false,
+};
 
 const chatReducer = createReducer(
   initialState,
-  on(ChatActions.init, (state) => ({ ...state, loaded: false, error: null })),
-  on(ChatActions.loadChatSuccess, (state, { chat }) => ({
+  on(ChatActions.loadChat, (state) => ({
     ...state,
-    messages: chat.messages,
-    members: chat.members,
+    loaded: false,
+    loading: true,
+    error: null,
   })),
+  on(ChatActions.loadChatSuccess, (state, { chat }) => {
+    console.log(chat);
+    return {
+      ...state,
+      chats: [
+        ...state.chats,
+        { messages: chat.messages, members: chat.members },
+      ],
+      selectedChat: chat,
+      loaded: true,
+      loading: false,
+    };
+  }),
   on(ChatActions.loadChatFailure, (state, { error }) => ({ ...state, error }))
 );
 

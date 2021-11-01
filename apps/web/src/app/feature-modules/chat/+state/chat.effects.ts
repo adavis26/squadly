@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 export class ChatEffects {
   init$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ChatActions.init),
+      ofType(ChatActions.loadChat),
       mergeMap(({ chatId }) =>
         this.chatService.getChat(chatId).pipe(
           map((chat) => {
@@ -20,17 +20,6 @@ export class ChatEffects {
           catchError((error) => of(ChatActions.loadChatFailure({ error })))
         )
       )
-      // fetch({
-      //   run: (action, { chatId }) => {
-      //     return this.chatService.getChat(chatId).pipe(map(chat => ))
-      //     // Your custom service 'load' logic goes here. For now just return a success action...
-      //   },
-
-      //   onError: (action, error) => {
-      //     console.error('Error', error);
-      //     return ChatActions.loadChatFailure({ error });
-      //   },
-      // })
     )
   );
 

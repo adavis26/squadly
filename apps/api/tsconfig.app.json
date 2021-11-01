@@ -5,8 +5,12 @@
     "outDir": "../../dist/out-tsc",
     "types": ["node"],
     "emitDecoratorMetadata": true,
-    "target": "es2015"
+    "experimentalDecorators": true,
+    "target": "es2015",
+    "paths": {
+      "@squadly/core": ["../../../libs/core/src/index.ts"]
+    }
   },
-  "exclude": ["**/*.spec.ts"],
   "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
 }

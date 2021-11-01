@@ -1,21 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { Chat } from '../../../../../../libs/core/src/lib/interfaces/index';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Message } from '../../../entity/messages.entity';
+import { MessageDTO } from '../../../../../../libs/core/src/lib/interfaces';
+import { Message } from '../../database/entities/messages.entity';
 
 @Injectable()
 export class ChatService {
   constructor(
     @InjectRepository(Message)
-    private readonly usersRepository: Repository<Message>
+    private readonly messagesRepository: Repository<Message>
   ) {}
 
-  async getMessages(id: number): Promise<Message[]> {
-    return await this.usersRepository.find();
+  public async getMessages(chatId: number): Promise<Message[]> {
+    return await this.messagesRepository.find();
   }
 
-  async saveMessage(message: Message): Promise<Message> {
-    return await this.usersRepository.save(message);
+  public async getMembers(chatId: number) {
+    // Promise<Message[]> 
+    // return await
+  }
+
+  public async saveMessage(message: MessageDTO): Promise<Message> {
+    const entity: Partial<Message> = {
+      ...message,
+      timestamp: new Date(),
+    };
+
+    return await this.messagesRepository.save(entity);
   }
 }

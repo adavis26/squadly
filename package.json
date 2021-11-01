@@ -57,11 +57,11 @@
     "class-transformer": "^0.4.0",
     "class-validator": "~0.11.0",
     "ngx-socket-io": "^3.2.0",
-    "pg": "^8.5.1",
+    "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
-    "typeorm": "^0.2.31",
+    "typeorm": "^0.2.37",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
