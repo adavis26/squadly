@@ -22,5 +22,5 @@ export const selectChats = createSelector(
 
 export const getSelectedChat = createSelector(
   getChatState,
-  (state: State, chatId: number) => state.selectedChat
+  (state: State) => state.selectedChat
 );

@@ -1,15 +1,21 @@
 <div class="chat-container">
-  <div *ngFor="let message of messages" class="messages-container">
-    <p>{{message.msg}}</p>
+  <div *ngIf="(chat$ | async); else loading; else" class="messages-container">
+    <ng-container *ngFor="let message of (chat$ | async)?.messages">
+      {{message?.content}}
+    </ng-container>
   </div>
 
   <div class="input-container">
     <mat-divider></mat-divider>
-    <mat-form-field>
-      <input matInput type="text" autocomplete="off">
-      <button mat-button matSuffix mat-icon-button aria-label="Clear">
-        <mat-icon>send</mat-icon>
-      </button>
-    </mat-form-field>
+    <form (ngSubmit)="sendMessage()" style="width: 100%;">
+      <mat-form-field>
+        <input [(ngModel)]="content" name="content" matInput type="text" autocomplete="off">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
   </div>
 </div>
+
+<<ng-template #loading>yo</ng-template>

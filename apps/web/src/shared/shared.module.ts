@@ -6,8 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChatService } from './services/chat.service';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpService } from '@nestjs/common';
+import { ChatSocketService } from './services/chat.socket.service';
 
 const matModules = [
   MatInputModule,
@@ -20,7 +19,7 @@ const matModules = [
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...matModules],
-  providers: [ChatService],
+  providers: [ChatService, ChatSocketService],
   exports: [...matModules],
 })
 export class SharedModule {}

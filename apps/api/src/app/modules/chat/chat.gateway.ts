@@ -11,7 +11,7 @@ import {
 import { Socket } from 'dgram';
 import { MessageDTO } from '../../../../../../libs/core/src/lib/interfaces';
 import { ChatService } from './chat.service';
-import { Server } from 'socket.io';
+import { Client, Server } from 'socket.io';
 
 @WebSocketGateway({ cors: true })
 export class ChatGateway
@@ -31,16 +31,16 @@ export class ChatGateway
     @MessageBody() message: MessageDTO,
     @ConnectedSocket() client: Socket
   ) {
-    await this.chatService.saveMessage(message);
-    this.ws.emit('message:recieve', message);
+    const responseMessage = await this.chatService.saveMessage(message);
+    await this.ws.emit('message:recieve', responseMessage);
   }
 
   handleConnection(client: any, ...args: any[]) {
-    console.log('User connected');
+    console.log(`User connected - ${client.id}`);
   }
 
-  handleDisconnect(client: any) {
-    console.log('User disconnected');
+  handleDisconnect(client: Client) {
+    console.log(`User disconnected - ${client.id}`);
   }
 
   afterInit(ws: any) {

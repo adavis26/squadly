@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Chat, MessageDTO } from '../../../../../../../libs/core/src/';
+import { IChat, Message, MessageDTO } from '../../../../../../../libs/core/src/';
 
 export const loadChat = createAction(
   '[Chat Page] Load Chat',
@@ -8,7 +8,7 @@ export const loadChat = createAction(
 
 export const loadChatSuccess = createAction(
   '[Chat] Load Chat Success',
-  props<{ chat: Chat }>()
+  props<{ chat: IChat }>()
 );
 
 export const loadChatFailure = createAction(
@@ -27,6 +27,11 @@ export const sendMessageSuccess = createAction(
 );
 
 export const sendMessageFail = createAction(
-  '[Chat] Send Message Success',
+  '[Chat] Send Message Fail',
   props<{ error: any }>()
+);
+
+export const addMessage = createAction(
+  '[Chat] Add Message',
+  props<{ message: Message }>()
 );

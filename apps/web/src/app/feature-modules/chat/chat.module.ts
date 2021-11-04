@@ -7,8 +7,8 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromChat from './+state/chat.reducer';
 import { ChatEffects } from './+state/chat.effects';
 import { ChatFacade } from './+state/chat.facade';
-import { HttpService } from '@nestjs/common';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ChatComponent],
@@ -17,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     StoreModule.forFeature(fromChat.CHAT_FEATURE_KEY, fromChat.reducer),
     EffectsModule.forFeature([ChatEffects]),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ChatFacade],
 })
