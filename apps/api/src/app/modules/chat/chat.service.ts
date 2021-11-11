@@ -20,8 +20,16 @@ export class ChatService {
 
   public async getChat(chatId: number): Promise<Chat> {
     return await this.chatRepostiory.findOne(chatId, {
-      relations: ['messages']
+      relations: ['messages'],
     });
+  }
+
+  // public async getChats(userId: number): Promise<Chat[]> {
+  //   // return await this.chatRepostiory.createQueryBuilder('').select().from
+  // }
+
+  public async getMessage(messageId: number): Promise<Message> {
+    return await this.messagesRepository.findOne(messageId);
   }
 
   public async getMessages(chatId: number): Promise<Message[]> {
@@ -36,6 +44,8 @@ export class ChatService {
       chat,
     };
 
-    return await this.messagesRepository.save(entity);
+    const savedEntity = await this.messagesRepository.save(entity);
+
+    return this.getMessage(savedEntity.id);
   }
 }

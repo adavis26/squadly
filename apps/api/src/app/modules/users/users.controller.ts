@@ -1,14 +1,34 @@
-import { Controller, Post, Put, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Put,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from '../../../../../../libs/core/src/';
+import {
+  AddUserToChatDTO,
+  CreateUserDTO,
+} from '../../../../../../libs/core/src/';
 
-@Controller('users')
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
   public async createUser(@Body() user: CreateUserDTO) {
-    console.log(user);
     return await this.usersService.createUser(user);
+  }
+
+  @Get('/:id')
+  public async getUser(@Param('id', ParseIntPipe) userId: number) {
+    return await this.usersService.getUser(userId);
+  }
+
+  @Post('chat')
+  public async addUserToChat(@Body() payload: AddUserToChatDTO) {
+    return await this.usersService.addUserToChat(payload);
   }
 }

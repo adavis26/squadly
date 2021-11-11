@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Chat } from './chat.entity';
 
-@Entity({ schema: 'messaging', name: 'messageas' })
+@Entity({ schema: 'messaging', name: 'messages' })
 export class Message {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,6 +21,8 @@ export class Message {
   @Column({ type: 'varchar' })
   content: string;
 
-  @ManyToOne(() => Chat, (chat) => chat.messages)
+  @ManyToOne(() => Chat, (chat) => chat.messages, {
+    lazy: false,
+  })
   chat: Chat;
 }
