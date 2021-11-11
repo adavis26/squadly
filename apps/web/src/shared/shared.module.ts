@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChatService } from './services/chat.service';
 import { ChatSocketService } from './services/chat.socket.service';
+import { MatCardModule } from '@angular/material/card';
+import { NavComponent } from './components/nav/nav.component';
 
 const matModules = [
   MatInputModule,
@@ -14,12 +16,13 @@ const matModules = [
   MatIconModule,
   MatButtonModule,
   MatDividerModule,
+  MatCardModule,
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [NavComponent],
   imports: [CommonModule, ...matModules],
   providers: [ChatService, ChatSocketService],
-  exports: [...matModules],
+  exports: [...matModules, NavComponent],
 })
 export class SharedModule {}
