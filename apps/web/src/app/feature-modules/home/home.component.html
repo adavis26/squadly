@@ -1,0 +1,11 @@
+<div class="home-container">
+  <div class="chats-container">
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile *ngFor="let chat of (chats$ | async)">
+        <mat-card class="chat-card" [routerLink]="['chat', chat.id]" routerLinkActive="router-link-active">
+          {{chat.name}}
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
