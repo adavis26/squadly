@@ -1,31 +1,20 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Message } from '../../../entity/messages.entity';
-import { Chat } from '../../../../../../libs/core/src/lib/interfaces';
+import { Message } from '../../database/entities/messages.entity';
 import { ChatService } from './chat.service';
-
-export interface MessageDTO {
-  content: string;
-  userId: number;
-  chatId: number;
-}
+import { IChat, CreateChatDTO } from '@squadly/core';
+import { Chat } from 'app/database/entities/chat.entity';
 
 @Controller('chat')
 export class ChatController {
   constructor(private chatService: ChatService) {}
 
-  @Get(':id')
-  async getChat(@Param('id') id: number): Promise<Message[]> {
-    return await this.chatService.getMessages(id);
+  @Get(':chatId')
+  async getChat(@Param('chatId') id: number): Promise<Chat> {
+    return await this.chatService.getChat(id);
   }
 
-  @Post('')
-  async saveMessage(@Body() message: MessageDTO) {
-    return await this.chatService.saveMessage({
-      id: null,
-      content: message.content,
-      userId: message.userId,
-      chatId: message.chatId,
-      timestamp: new Date(),
-    });
+  @Post()
+  public async createChat(@Body() chat: CreateChatDTO) {
+    this.chatService.createChat(chat);
   }
 }

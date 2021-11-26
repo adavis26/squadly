@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { AuthFacade } from 'apps/web/src/store/auth/auth.facade';
+import { IChat } from 'libs/core/src';
+import { Observable, Subscription } from 'rxjs';
 import { ChatFacade } from './+state/chat.facade';
 
 @Component({
@@ -6,23 +15,46 @@ import { ChatFacade } from './+state/chat.facade';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements OnInit {
-  public messages = [
-    {
-      msg: 'Test Message',
-      uid: 1,
-    },
-    {
-      msg: 'Another Message',
-      uid: 2,
-    },
-  ];
+export class ChatComponent implements OnInit, OnDestroy {
+  public chat$: Observable<IChat>;
+  public content: string = '';
 
-  public chat$ = this.chatFacade.allChat$;
 
-  constructor(private chatFacade: ChatFacade) {
-    this.chat$.subscribe(d => console.log(d));
+  @ViewChild('messageContainer', { read: ElementRef })
+  public messageContainer: ElementRef;
+  public chatSub$: Subscription;
+  public selectedUserId$: Observable<number>;
+
+  constructor(private chatFacade: ChatFacade, private authFacade: AuthFacade) {}
+
+  ngOnInit(): void {
+    this.chat$ = this.chatFacade.selectedChat$;
+    this.selectedUserId$ = this.authFacade.selectedUserId$;
+
+    this.chatSub$ = this.chat$.subscribe((_chat) => {
+      if (_chat?.messages.length) {
+        this.autoScroll();
+      }
+    });
   }
 
-  ngOnInit(): void {}
+  public autoScroll(): void {
+    setTimeout(() => {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }, 10);
+  }
+
+  public sendMessage() {
+    this.chatFacade.sendMessage({
+      userId: 1,
+      chatId: 1,
+      content: this.content,
+    });
+
+    this.content = '';
+  }
+
+  ngOnDestroy() {
+    this.chatSub$.unsubscribe();
+  }
 }

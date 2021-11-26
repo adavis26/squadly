@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4 offset-4 text-center">
+      <h1 class="squadly-title squadly-title-animate" [routerLink]="['/home']">squadly</h1>
+    </div>
+    <div class="col-2 offset-2 text-left">
+      <div *ngIf="isAuthenticated">
+        <div ngbDropdown class="d-inline-block">
+          <p class="user-btn" id="dropdownForm1" ngbDropdownToggle>{{user.username}}</p>
+          <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+            <button class="btn btn-danger" (click)="logout()">logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,9 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@squadly/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@squadly/core": ["libs/core/src/index.ts"]
+      "@squadly/core": ["libs/core/src/index"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp"],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true
+  }
 }

@@ -1,0 +1,20 @@
+.chat-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-right:10px;
+}
+
+.chat-card {
+  /* background-color: #2DAAF8; */
+  padding: 10px;
+  height: 150px;
+  width: 25%;
+  max-width: 300px;
+  min-width: 230px;
+  display: inline-block;
+  margin-right:3vw;
+  border-radius: 5px;
+  color: #FFF;
+}
+

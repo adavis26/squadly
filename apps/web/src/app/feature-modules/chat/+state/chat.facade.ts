@@ -1,28 +1,32 @@
 import { Injectable } from '@angular/core';
-
 import { select, Store, Action } from '@ngrx/store';
-
+import { Message, MessageDTO } from 'libs/core/src/lib/interfaces';
 import * as ChatActions from './chat.actions';
-import * as ChatFeature from './chat.reducer';
 import * as ChatSelectors from './chat.selectors';
 
 @Injectable()
 export class ChatFacade {
-  /**
-   * Combine pieces of state using createSelector,
-   * and expose them as observables through the facade.
-   */
-  loaded$ = this.store.pipe(select(ChatSelectors.getChatLoaded));
-  allChat$ = this.store.pipe(select(ChatSelectors.getAllChat));
-  selectedChat$ = this.store.pipe(select(ChatSelectors.getSelected));
+  public loaded$ = this.store.pipe(select(ChatSelectors.getChatLoaded));
+  // allChat$ = this.store.pipe(select(ChatSelectors.getSelectedChat));
+
+  public selectedChat$ = this.store.pipe(select(ChatSelectors.getSelectedChat));
+
+  public chats$ = this.store.pipe(select(ChatSelectors.selectChats));
+
+  public getUser$ = (userId: number) =>
+    this.store.pipe(select(ChatSelectors.getUser, userId));
 
   constructor(private store: Store) {}
 
-  /**
-   * Use the initialization action to perform one
-   * or more tasks in your Effects.
-   */
-  init() {
-    this.store.dispatch(ChatActions.init());
+  public loadChat(chatId) {
+    this.store.dispatch(ChatActions.loadChat({ chatId }));
+  }
+
+  public sendMessage(message: MessageDTO) {
+    this.store.dispatch(ChatActions.sendMessage({ message }));
+  }
+
+  public addMessage(message: Message) {
+    this.store.dispatch(ChatActions.addMessage({ message }));
   }
 }

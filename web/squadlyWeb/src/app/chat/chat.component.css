@@ -1,0 +1,60 @@
+.squadly-title {
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.squadly-title-animate {
+  animation: rightFadeInOut;
+  animation-duration: 1s;
+}
+
+.text-input {
+  width: 100%;
+  outline: none;
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 22px;
+}
+
+.message-container {
+  overflow-y: scroll;
+}
+
+.submit-button {
+  border: none;
+  background-color: #2DAAF8;
+  color: #FFF;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.submit-button:hover {
+  outline: 0 !important;
+  box-shadow: none !important;
+  color: #2DAAF8;
+  background-color: #FFF;
+  border-color: #2DAAF8;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.submit-button:active {
+  outline: 0 !important;
+  box-shadow: none !important;
+  color: #1BBB39;
+  background-color: #FFF;
+  border-color: #1BBB39;
+  border-style: solid;
+  border-width: 2px;
+}
+
+
+
+@keyframes rightFadeInOut {
+  0% {
+    transform: translateX(42%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+
+}

@@ -1,0 +1,43 @@
+.squad-container {
+  width: 100%;
+  height: 50px;
+  overflow: scroll;
+}
+
+.squad-tab {
+  display: inline-block;
+}
+
+.squad-tab-button {
+  color: #AEAEAE;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size:22px;
+}
+
+.squad-tab-button-active {
+  color: #2E363C;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.squad-line-active {
+  width: 100%;
+  margin-top: -11px;
+  height: 0;
+  border-top: 3px solid;
+  border-color: #2FC787;
+}
+
+.squad-tab-button:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.squad-line {
+  width: 100%;
+  margin-top: -11px;
+  height: 0;
+  border-top: 3px solid;
+  border-color: #AEAEAE;
+}

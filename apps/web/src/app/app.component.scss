@@ -1,5 +1,4 @@
-.header-container{
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
+body {
+  height: calc(100vh - 50px);
+  overflow-y: hidden;
 }
