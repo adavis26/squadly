@@ -14,17 +14,33 @@ export class UsersService {
   ) {}
 
   public async createUser(user: CreateUserDTO) {
-    return await this.userRepository.save(user);
+    const entity = this.userRepository.create(user);
+    return await this.userRepository.save(entity);
   }
 
   public async searchUser(query: string) {
     return await this.userRepository.find({
-      where: [{ first_name: ILike(`%${query}%`) }, { last_name: ILike(`%${query}%`) }],
+      where: [
+        { first_name: ILike(`%${query}%`) },
+        { last_name: ILike(`%${query}%`) },
+      ],
     });
   }
 
-  public async getUser(userId: number): Promise<User> {
+  public async getUserById(userId: number): Promise<User> {
     return await this.userRepository.findOne(userId, { relations: ['chats'] });
+  }
+
+  public async getUserPassword(
+    username: string
+  ): Promise<{ password: string; id: number }> {
+    console.log(username);
+    return await this.userRepository
+      .createQueryBuilder()
+      .select('id')
+      .addSelect('password')
+      .where('username = :username', { username })
+      .getRawOne();
   }
 
   public async addUserToChat(payload: AddUserToChatDTO) {

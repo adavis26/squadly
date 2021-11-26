@@ -35,7 +35,7 @@ export class UsersController {
 
   @Get('/:id')
   public async getUser(@Param('id', ParseIntPipe) userId: number) {
-    return await this.usersService.getUser(userId);
+    return await this.usersService.getUserById(userId);
   }
 
   @Post('chat')
