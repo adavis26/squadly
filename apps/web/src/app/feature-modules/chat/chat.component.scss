@@ -40,24 +40,3 @@
     padding-left: 5%;
   }
 }
-
-.user-message {
-  justify-content: flex-end;
-}
-
-.user-message::after {
-  position: absolute;
-  top: 0px;
-  bottom: -3px;
-  left: 0px;
-  right: 0px;
-  background: linear-gradient( #253BCA ,#2491E6);
-  content: '';
-  z-index: -1;
-  border-radius: 6px;
-}
-
-.message {
-  margin-top: 30px;
-  display: flex;
-}

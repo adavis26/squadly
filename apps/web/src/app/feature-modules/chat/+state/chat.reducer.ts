@@ -1,11 +1,14 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import * as ChatActions from './chat.actions';
-import { IChat } from '../../../../../../../libs/core/src/lib/interfaces';
+import {
+  IChat,
+  IShortChat,
+} from '../../../../../../../libs/core/src/lib/interfaces';
 
 export const CHAT_FEATURE_KEY = 'chat';
 
 export interface State {
-  chats: IChat[];
+  chats: IShortChat[];
   selectedChat: IChat;
   loaded: boolean;
   loading: boolean;
@@ -33,7 +36,6 @@ const chatReducer = createReducer(
   })),
   on(ChatActions.loadChatSuccess, (state, { chat }) => ({
     ...state,
-    chats: [...state.chats, { messages: chat.messages, members: chat.members }],
     selectedChat: chat,
     loaded: true,
     loading: false,
@@ -45,6 +47,10 @@ const chatReducer = createReducer(
       ...state.selectedChat,
       messages: [...state.selectedChat.messages, message],
     },
+  })),
+  on(ChatActions.setUserChats, (state, { chats }) => ({
+    ...state,
+    chats,
   }))
 );
 

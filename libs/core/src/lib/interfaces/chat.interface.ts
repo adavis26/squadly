@@ -8,6 +8,11 @@ export interface IChat {
   name: string;
 }
 
+export interface IShortChat {
+  chatId: number;
+  name: string;
+}
+
 export interface CreateChatDTO {
   name: string;
 }

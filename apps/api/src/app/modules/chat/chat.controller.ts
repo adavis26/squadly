@@ -14,7 +14,7 @@ export class ChatController {
   }
 
   @Post()
-  public async createChat(@Body() chat: CreateChatDTO){
-    this.chatService.createChat(chat)
+  public async createChat(@Body() chat: CreateChatDTO) {
+    this.chatService.createChat(chat);
   }
 }

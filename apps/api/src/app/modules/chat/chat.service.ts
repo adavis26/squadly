@@ -20,7 +20,7 @@ export class ChatService {
 
   public async getChat(chatId: number): Promise<Chat> {
     return await this.chatRepostiory.findOne(chatId, {
-      relations: ['messages'],
+      relations: ['messages', 'members'],
     });
   }
 

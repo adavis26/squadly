@@ -11,6 +11,11 @@ export class ChatFacade {
 
   public selectedChat$ = this.store.pipe(select(ChatSelectors.getSelectedChat));
 
+  public chats$ = this.store.pipe(select(ChatSelectors.selectChats));
+
+  public getUser$ = (userId: number) =>
+    this.store.pipe(select(ChatSelectors.getUser, userId));
+
   constructor(private store: Store) {}
 
   public loadChat(chatId) {

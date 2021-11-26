@@ -6,6 +6,8 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
@@ -20,6 +22,15 @@ export class UsersController {
   @Post()
   public async createUser(@Body() user: CreateUserDTO) {
     return await this.usersService.createUser(user);
+  }
+
+  @Get('')
+  public async searchUser(@Query('query') query: string) {
+    if (!query) {
+      throw new BadRequestException('No query provided');
+    }
+
+    return await this.usersService.searchUser(query);
   }
 
   @Get('/:id')

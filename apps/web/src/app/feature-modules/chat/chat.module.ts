@@ -9,16 +9,17 @@ import { ChatEffects } from './+state/chat.effects';
 import { ChatFacade } from './+state/chat.facade';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
-  declarations: [ChatComponent],
+  declarations: [ChatComponent, MessageComponent],
   imports: [
     CommonModule,
     SharedModule,
     StoreModule.forFeature(fromChat.CHAT_FEATURE_KEY, fromChat.reducer),
     EffectsModule.forFeature([ChatEffects]),
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [ChatFacade],
 })

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../database/entities/users.entity';
-import { Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { AddUserToChatDTO, CreateUserDTO } from '@squadly/core';
 import { ChatService } from '../chat/chat.service';
 
@@ -17,8 +17,14 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
+  public async searchUser(query: string) {
+    return await this.userRepository.find({
+      where: [{ first_name: ILike(`%${query}%`) }, { last_name: ILike(`%${query}%`) }],
+    });
+  }
+
   public async getUser(userId: number): Promise<User> {
-    return await this.userRepository.findOne(userId, {relations: ['chats']});
+    return await this.userRepository.findOne(userId, { relations: ['chats'] });
   }
 
   public async addUserToChat(payload: AddUserToChatDTO) {

@@ -1,13 +1,11 @@
-<div class="chat-container">
-  <div [hidden]="!(chat$ | async)" class="messages-container" #messageContainer>
-    <ng-container *ngFor="let message of (chat$ | async)?.messages">
-      <mat-card class="message" [class.user-message]="message.userId === currentUserId">
-        <div style="display: flex; flex-direction: column;">
-          <p>{{message.userId}}</p>
-          <p>{{message?.content}}</p>
-        </div>
-      </mat-card>
-      <p style="font-size: xx-small;" [style.text-align]="message.userId === currentUserId ? 'right' : ''">{{message.timestamp | date: 'shortTime'}}</p>
+<div [hidden]="!(chat$ | async)" class="chat-container">
+  <div class="header">
+    {{(chat$ | async)?.name}}
+  </div>
+
+  <div class="messages-container" #messageContainer>
+    <ng-container *ngFor="let message of (chat$ | async)?.messages; let i=index">
+      <app-message [message]="message" [user]="(message.userId | getUser) | async" [currentUserId]="selectedUserId$ | async"></app-message>
     </ng-container>
   </div>
 
@@ -23,5 +21,3 @@
     </form>
   </div>
 </div>
-
-<ng-template #loading>yo</ng-template>

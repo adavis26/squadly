@@ -17,10 +17,16 @@ export const getChatError = createSelector(
 
 export const selectChats = createSelector(
   getChatState,
-  (state: State, chatId: number) => {}
+  (state: State) => state.chats
 );
 
 export const getSelectedChat = createSelector(
   getChatState,
   (state: State) => state.selectedChat
+);
+
+export const getUser = createSelector(
+  getChatState,
+  (state: State, userId: number) =>
+    state.selectedChat.members.find((user) => user.id === userId)
 );

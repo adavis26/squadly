@@ -1,5 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { IChat, Message, MessageDTO } from '../../../../../../../libs/core/src/';
+import {
+  IChat,
+  IShortChat,
+  Message,
+  MessageDTO,
+} from '../../../../../../../libs/core/src/';
 
 export const loadChat = createAction(
   '[Chat Page] Load Chat',
@@ -34,4 +39,9 @@ export const sendMessageFail = createAction(
 export const addMessage = createAction(
   '[Chat] Add Message',
   props<{ message: Message }>()
+);
+
+export const setUserChats = createAction(
+  '[Chat] Set User Chats',
+  props<{ chats: IShortChat[] }>()
 );

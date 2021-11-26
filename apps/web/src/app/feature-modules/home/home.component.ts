@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IShortChat } from 'libs/core/src';
+import { Observable } from 'rxjs';
+import { ChatFacade } from '../chat/+state/chat.facade';
 
 @Component({
   selector: 'squadly-home',
@@ -6,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  public chats$: Observable<IShortChat[]>;
+
+  constructor(private readonly chatFacade: ChatFacade) {
+    this.chats$ = this.chatFacade.chats$;
+  }
 
   ngOnInit() {}
 }
