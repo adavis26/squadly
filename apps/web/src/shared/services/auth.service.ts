@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'libs/core/src/lib/interfaces';
+import { LoginDTO, User } from 'libs/core/src/lib/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -12,7 +12,10 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   public loadUser(userId: number): Observable<User> {
-    console.log(userId)
     return this.http.get<User>(`${this.baseurl}/${userId}`);
+  }
+
+  public login(data: LoginDTO): Observable<User> {
+    return this.http.post<User>(`http://localhost:3333/${this.baseurl}`, data);
   }
 }

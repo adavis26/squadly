@@ -11,7 +11,7 @@ import * as ChatActions from '../../app/feature-modules/chat/+state/chat.actions
 
 @Injectable()
 export class AuthEffects {
-  loadChat$ = createEffect(() =>
+  loadUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loadUser),
       mergeMap(({ userId }) =>
@@ -21,6 +21,18 @@ export class AuthEffects {
             ChatActions.setUserChats({ chats: user.chats }),
           ]),
           catchError((error) => of(AuthActions.loadUserFailure({ error })))
+        )
+      )
+    )
+  );
+
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.login),
+      mergeMap(({ data }) =>
+        this.authService.login(data).pipe(
+          switchMap((user) => [AuthActions.loginSuccess({ user })]),
+          catchError((error) => of(AuthActions.loginFailure({ error })))
         )
       )
     )
