@@ -44,9 +44,8 @@ import { GlobalStoreModule } from '../store/global-store.module';
     EffectsModule.forRoot([AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     SocketIoModule.forRoot({ url: environment.SOCKET_ENDPOINT, options: {} }),
-    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
     LoginModule,
-    GlobalStoreModule
+    GlobalStoreModule,
   ],
   providers: [HttpService, AuthFacade],
   bootstrap: [AppComponent],

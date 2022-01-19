@@ -4,12 +4,16 @@ import { LoginComponent } from './login.component';
 import { SharedModule } from 'apps/web/src/shared/shared.module';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { RouterModule } from '@angular/router';
+import { GlobalStoreModule } from 'apps/web/src/store/global-store.module';
+import { AuthEffects } from 'apps/web/src/store/auth/auth.effects';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    GlobalStoreModule
   ],
   declarations: [LoginComponent, SignUpComponent]
 })

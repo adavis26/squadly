@@ -7,12 +7,12 @@ export const loadUser = createAction(
 );
 
 export const loadUserSuccess = createAction(
-  '[Chat] Load User Success',
+  '[Auth] Load User Success',
   props<{ user: User }>()
 );
 
 export const loadUserFailure = createAction(
-  '[Chat] Load User Failure',
+  '[Auth] Load User Failure',
   props<{ error: any }>()
 );
 

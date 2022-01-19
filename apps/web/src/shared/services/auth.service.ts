@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginDTO, User } from 'libs/core/src/lib/interfaces';
+import { CreateUserDTO, LoginDTO, User } from 'libs/core/src/lib/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,6 +16,14 @@ export class AuthService {
   }
 
   public login(data: LoginDTO): Observable<User> {
-    return this.http.post<User>(`http://localhost:3333/${this.baseurl}`, data);
+    return this.http
+      .post<User>(`//localhost:3333${this.baseurl}`, data)
+      .pipe(map((data) => data));
+  }
+
+  public createUser(user: CreateUserDTO) {
+    return this.http
+      .post<User>(`//localhost:3333${this.baseurl}`, user)
+      .pipe(map((data) => data));
   }
 }

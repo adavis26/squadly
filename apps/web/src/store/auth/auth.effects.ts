@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { fetch } from '@nrwl/angular';
 import * as AuthActions from './auth.actions';
-import { ChatService } from 'apps/web/src/shared/services/chat.service';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ChatSocketService } from 'apps/web/src/shared/services/chat.socket.service';
 import { AuthService } from '../../shared/services/auth.service';
-import * as ChatActions from '../../app/feature-modules/chat/+state/chat.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -16,10 +12,7 @@ export class AuthEffects {
       ofType(AuthActions.loadUser),
       mergeMap(({ userId }) =>
         this.authService.loadUser(userId).pipe(
-          switchMap((user) => [
-            AuthActions.loadUserSuccess({ user }),
-            ChatActions.setUserChats({ chats: user.chats }),
-          ]),
+          switchMap((user) => [AuthActions.loadUserSuccess({ user })]),
           catchError((error) => of(AuthActions.loadUserFailure({ error })))
         )
       )
@@ -33,6 +26,18 @@ export class AuthEffects {
         this.authService.login(data).pipe(
           switchMap((user) => [AuthActions.loginSuccess({ user })]),
           catchError((error) => of(AuthActions.loginFailure({ error })))
+        )
+      )
+    )
+  );
+
+  createUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.createUser),
+      mergeMap(({ user }) =>
+        this.authService.createUser(user).pipe(
+          switchMap((user) => [AuthActions.createUserSuccess({ user })]),
+          catchError((error) => of(AuthActions.createUserFailure({ error })))
         )
       )
     )
