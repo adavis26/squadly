@@ -14,7 +14,7 @@ export class UsersService {
   ) {}
 
   public async createUser(user: CreateUserDTO) {
-    return await this.userRepository.save(user);
+    return await this.userRepository.save(this.userRepository.create(user));
   }
 
   public async searchUser(query: string) {
@@ -32,12 +32,11 @@ export class UsersService {
 
   public async getUserPassword(
     username: string
-  ): Promise<{ password: string; id: number }> {
-    console.log(username);
+  ): Promise<{ password: string; id: number}> {
     return await this.userRepository
       .createQueryBuilder()
-      .select('id')
-      .addSelect('password')
+      .select('password')
+      .addSelect('id')
       .where('username = :username', { username })
       .getRawOne();
   }

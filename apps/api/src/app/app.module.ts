@@ -12,9 +12,7 @@ import { LoggerModule } from 'nestjs-pino';
     UsersModule,
     ChatModule,
     DatabaseModule,
-    ConfigModule.forRoot({
-      envFilePath: '../../../../.env'
-    }),
+    ConfigModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         prettyPrint: {

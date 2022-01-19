@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Chat } from './chat.entity';
 import * as bcrypt from 'bcrypt';
+import { environment } from '../../../environments/environment';
 
 @Entity({ schema: 'users', name: 'users' })
 export class User {
@@ -35,6 +36,6 @@ export class User {
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password);
+    this.password = await bcrypt.hash(this.password, environment.hashCyles);
   }
 }

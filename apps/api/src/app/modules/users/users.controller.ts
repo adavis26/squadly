@@ -35,10 +35,9 @@ export class UsersController {
   }
 
   @Get('/:id')
-  public async getUser(
-    @Param('id', ParseIntPipe) userId: number
-  ): Promise<User> {
+  public async getUser(@Param('id', ParseIntPipe) userId: number): Promise<User> {
     return await this.usersService.getUserById(userId);
+    
   }
 
   @Post('chat')
