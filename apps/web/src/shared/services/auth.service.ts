@@ -17,13 +17,13 @@ export class AuthService {
 
   public login(data: LoginDTO): Observable<User> {
     return this.http
-      .post<User>(`//localhost:3333${this.baseurl}`, data)
+      .post<User>(`${this.baseurl}`, data)
       .pipe(map((data) => data));
   }
 
   public createUser(user: CreateUserDTO) {
     return this.http
-      .post<User>(`//localhost:3333${this.baseurl}`, user)
+      .post<User>(this.baseurl, user)
       .pipe(map((data) => data));
   }
 }
