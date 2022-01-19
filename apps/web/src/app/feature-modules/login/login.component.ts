@@ -45,8 +45,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authFacade.isAuthenticated$,
       this.authFacade.isAuthenticating$,
     ]).subscribe(([isAuthenticated, isAuthenticating]) => {
-      console.log(isAuthenticating)
-      console.log(isAuthenticated)
       if (isAuthenticated) {
         this.rotuer.navigate(['/']);
       }
