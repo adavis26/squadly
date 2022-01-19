@@ -14,6 +14,7 @@ import {
   AddUserToChatDTO,
   CreateUserDTO,
 } from '../../../../../../libs/core/src/';
+import { User } from 'app/database/entities/users.entity';
 
 @Controller('user')
 export class UsersController {
@@ -34,7 +35,9 @@ export class UsersController {
   }
 
   @Get('/:id')
-  public async getUser(@Param('id', ParseIntPipe) userId: number) {
+  public async getUser(
+    @Param('id', ParseIntPipe) userId: number
+  ): Promise<User> {
     return await this.usersService.getUserById(userId);
   }
 

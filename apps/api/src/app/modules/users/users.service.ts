@@ -14,8 +14,7 @@ export class UsersService {
   ) {}
 
   public async createUser(user: CreateUserDTO) {
-    const entity = this.userRepository.create(user);
-    return await this.userRepository.save(entity);
+    return await this.userRepository.save(user);
   }
 
   public async searchUser(query: string) {
