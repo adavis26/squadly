@@ -6,10 +6,12 @@ import * as AuthSelectors from './auth.selectors';
 
 @Injectable()
 export class AuthFacade {
-  // public loaded$ = this.store.pipe(select(AuthSelectors.));
+  public isAuthenticated$ = this.store.pipe(select(AuthSelectors.getIsAuthenticated));
+  public isAuthenticating$ = this.store.pipe(select(AuthSelectors.getIsAuthenticating));
 
   public selectedUser$ = this.store.pipe(select(AuthSelectors.getUser));
   public selectedUserId$ = this.store.pipe(select(AuthSelectors.getUserId));
+
 
   constructor(private store: Store) {}
 

@@ -15,8 +15,17 @@ export const getUserId = createSelector(
   (state: State) => state.user.id
 );
 
-
 export const getUserError = createSelector(
   getAuthState,
   (state: State) => state.error
+);
+
+export const getIsAuthenticated = createSelector(
+  getAuthState,
+  (state: State) => state.isAuthenticated
+);
+
+export const getIsAuthenticating = createSelector(
+  getAuthState,
+  (state: State) => state.isAuthenticating
 );
