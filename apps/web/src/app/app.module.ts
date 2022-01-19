@@ -19,6 +19,7 @@ import { AuthFacade } from '../store/auth/auth.facade';
 import { AuthEffects } from '../store/auth/auth.effects';
 import * as fromAuth from '../store/auth/auth.reducer';
 import { LoginModule } from './feature-modules/login/login.module';
+import { GlobalStoreModule } from '../store/global-store.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,6 +46,7 @@ import { LoginModule } from './feature-modules/login/login.module';
     SocketIoModule.forRoot({ url: environment.SOCKET_ENDPOINT, options: {} }),
     StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
     LoginModule,
+    GlobalStoreModule
   ],
   providers: [HttpService, AuthFacade],
   bootstrap: [AppComponent],

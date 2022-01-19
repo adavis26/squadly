@@ -12,6 +12,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { GetUserPipe } from './pipes/get-user.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const matModules = [
   MatInputModule,
@@ -21,6 +22,7 @@ const matModules = [
   MatDividerModule,
   MatCardModule,
   MatGridListModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({
