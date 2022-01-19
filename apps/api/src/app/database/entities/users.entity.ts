@@ -24,10 +24,10 @@ export class User {
   email: string;
 
   @Column({ type: 'varchar', name: 'first_name' })
-  first_name: string;
+  firstName: string;
 
   @Column({ type: 'varchar', name: 'last_name' })
-  last_name: string;
+  lastName: string;
 
   @ManyToMany(() => Chat, (chat) => chat.members, { cascade: true })
   @JoinTable()

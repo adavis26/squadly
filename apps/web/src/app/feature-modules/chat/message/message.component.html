@@ -1,6 +1,6 @@
 <mat-card class="message" [class.user-message]="message.userId === currentUserId">
   <div style="display: flex; flex-direction: column;">
-    <p>{{user.first_name | titlecase}} {{user.last_name | titlecase}}</p>
+    <p>{{user.firstName | titlecase}} {{user.lastName | titlecase}}</p>
     <p>{{message?.content}}</p>
   </div>
 </mat-card>

@@ -2,16 +2,16 @@ import { IChat } from './chat.interface';
 
 export interface User {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   chats?: IChat[];
 }
 
 export interface CreateUserDTO {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   password: string;
