@@ -5,6 +5,7 @@ import { HomeComponent } from './feature-modules/home/home.component';
 import { ChatComponent } from './feature-modules/chat/chat.component';
 import { ChatResolver } from '../shared/resolver/chat.resolver';
 import { LoginComponent } from './feature-modules/login/login.component';
+import { SignUpComponent } from './feature-modules/login/sign-up/sign-up.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent
   }
 ];
 
