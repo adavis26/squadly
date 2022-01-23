@@ -23,16 +23,9 @@ const initialState: State = {
 
 const chatReducer = createReducer(
   initialState,
-  on(AuthActions.loadUser, (state) => ({
-    ...state,
-  })),
-  on(AuthActions.loadUserSuccess, (state, { user }) => ({
+  on(AuthActions.setUser, (state, { user }) => ({
     ...state,
     user,
-  })),
-  on(AuthActions.loadUserFailure, (state, { error }) => ({
-    ...state,
-    error,
   })),
   on(AuthActions.login, (state) => ({
     ...state,

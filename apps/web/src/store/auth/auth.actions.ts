@@ -1,19 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { CreateUserDTO, User } from '../../../../../libs/core/src';
 
-export const loadUser = createAction(
+export const setUser = createAction(
   '[Auth] Load User',
-  props<{ userId: number }>()
-);
-
-export const loadUserSuccess = createAction(
-  '[Auth] Load User Success',
   props<{ user: User }>()
-);
-
-export const loadUserFailure = createAction(
-  '[Auth] Load User Failure',
-  props<{ error: any }>()
 );
 
 export const login = createAction(

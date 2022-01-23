@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store, Action } from '@ngrx/store';
-import { CreateUserDTO, Message, MessageDTO } from 'libs/core/src/lib/interfaces';
+import { CreateUserDTO, Message, MessageDTO, User } from 'libs/core/src/lib/interfaces';
 import * as AuthActions from './auth.actions';
 import * as AuthSelectors from './auth.selectors';
 
@@ -15,8 +15,8 @@ export class AuthFacade {
 
   constructor(private store: Store) {}
 
-  public loadUser(userId: number) {
-    this.store.dispatch(AuthActions.loadUser({ userId }));
+  public setUser(user: User) {
+    this.store.dispatch(AuthActions.setUser({ user }));
   }
 
   public login(data: { username: string; password: string }) {
