@@ -1,0 +1,8 @@
+<h3>create chat</h3>
+<form [formGroup]="createChatForm">
+  <mat-form-field>
+    <mat-label>name</mat-label>
+    <input formControlName="name" matInput>
+  </mat-form-field>
+  <button mat-stroked-button type="submit" (click)="createChat()" [disabled]="createChatForm.invalid">create</button>
+</form>

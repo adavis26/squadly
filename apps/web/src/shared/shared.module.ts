@@ -13,6 +13,8 @@ import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { GetUserPipe } from './pipes/get-user.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CreateChatComponent } from './components/create-chat/create-chat.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const matModules = [
   MatInputModule,
@@ -22,13 +24,20 @@ const matModules = [
   MatDividerModule,
   MatCardModule,
   MatGridListModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  MatDialogModule,
 ];
 
 @NgModule({
-  declarations: [NavComponent, GetUserPipe],
+  declarations: [NavComponent, GetUserPipe, CreateChatComponent],
   imports: [CommonModule, ...matModules, RouterModule],
   providers: [ChatService, ChatSocketService],
-  exports: [...matModules, NavComponent, GetUserPipe],
+  exports: [
+    ...matModules,
+    NavComponent,
+    CreateChatComponent,
+    GetUserPipe,
+    MatDialogModule,
+  ],
 })
 export class SharedModule {}

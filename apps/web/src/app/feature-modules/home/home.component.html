@@ -1,4 +1,7 @@
 <div class="home-container">
+  <div>
+    <button mat-stroked-button (click)="openCreateChatDialog()">create chat</button>
+  </div>
   <div class="chats-container">
     <mat-grid-list cols="2" rowHeight="2:1">
       <mat-grid-tile *ngFor="let chat of (chats$ | async)">
