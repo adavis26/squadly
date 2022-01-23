@@ -35,6 +35,18 @@ export class ChatEffects {
     )
   );
 
+  createChat$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.createChat),
+      mergeMap(({ chat }) =>
+        this.chatService.createChat(chat).pipe(
+          map((chat) => ChatActions.createChatSuccess({ chat })),
+          catchError((error) => of(ChatActions.createChatFail({ error })))
+        )
+      )
+    )
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly chatService: ChatService,

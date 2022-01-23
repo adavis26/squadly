@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  CreateChatDTO,
   IChat,
   IShortChat,
   Message,
@@ -44,4 +45,19 @@ export const addMessage = createAction(
 export const setUserChats = createAction(
   '[Chat] Set User Chats',
   props<{ chats: IShortChat[] }>()
+);
+
+export const createChat = createAction(
+  '[Chat] Create Chat',
+  props<{ chat: CreateChatDTO }>()
+);
+
+export const createChatSuccess = createAction(
+  '[Chat] Set User Chats',
+  props<{ chat: IShortChat }>()
+);
+
+export const createChatFail = createAction(
+  '[Chat] Set User Chats',
+  props<{ error: any }>()
 );
