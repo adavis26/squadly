@@ -26,7 +26,7 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "private": true,
   "dependencies": {
@@ -37,8 +37,8 @@
     "@angular/core": "^11.0.0",
     "@angular/forms": "^11.0.0",
     "@angular/material": "^11.2.0",
+    "@angular/platf-browser-dynamic": "^11.0.0",
     "@angular/platform-browser": "^11.0.0",
-    "@angular/platform-browser-dynamic": "^11.0.0",
     "@angular/router": "^11.0.0",
     "@nestjs/common": "^7.6.12",
     "@nestjs/config": "^1.1.6",
@@ -63,8 +63,10 @@
     "nestjs-pino": "^2.5.0",
     "ngx-socket-io": "^3.4.0",
     "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
     "pino-http": "^6.5.0",
     "pino-pretty": "^7.3.0",
+    "prisma": "^3.8.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
     "socket.io-client": "^4.3.2",
