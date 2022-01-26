@@ -4,6 +4,8 @@ import { Chat } from '../../database/entities/chat.entity';
 import { Repository } from 'typeorm';
 import { CreateChatDTO, IChat, MessageDTO } from '@squadly/core';
 import { Message } from '../../database/entities/messages.entity';
+import { PrismaService } from 'app/database/prisma.service';
+import { Chat as ChatModel, PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
@@ -11,25 +13,31 @@ export class ChatService {
     @InjectRepository(Message)
     private readonly messagesRepository: Repository<Message>,
     @InjectRepository(Chat)
-    private readonly chatRepostiory: Repository<Chat>
+    private readonly chatRepostiory: Repository<Chat>,
+    private readonly prismaService: PrismaService
   ) {}
 
   public async createChat(chat: CreateChatDTO) {
-    return await this.chatRepostiory.save(chat);
+    return await this.prismaService.chat.create({ data: chat });
   }
 
   public async getChat(chatId: number): Promise<Chat> {
-    return await this.chatRepostiory.findOne(chatId, {
-      relations: ['messages', 'members'],
+    return await this.prismaService.chat.findUnique({
+      where: { id: chatId },
     });
   }
 
-  // public async getChats(userId: number): Promise<Chat[]> {
-  //   // return await this.chatRepostiory.createQueryBuilder('').select().from
-  // }
+  public async getChats(userId: number): Promise<ChatModel[]> {
+    return await this.prismaService.chat({
+      where: {
+        user: userId,
+      },
+    });
+  }
 
   public async getMessage(messageId: number): Promise<Message> {
-    return await this.messagesRepository.findOne(messageId);
+    return await this.prismaService.chat.find({});
+    // return await this.messagesRepository.findOne(messageId);
   }
 
   public async getMessages(chatId: number): Promise<Message[]> {

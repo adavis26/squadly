@@ -14,7 +14,7 @@ import {
   AddUserToChatDTO,
   CreateUserDTO,
 } from '../../../../../../libs/core/src/';
-import { User } from 'app/database/entities/users.entity';
+import { User as UserModel } from '@prisma/client';
 
 @Controller('user')
 export class UsersController {
@@ -35,9 +35,10 @@ export class UsersController {
   }
 
   @Get('/:id')
-  public async getUser(@Param('id', ParseIntPipe) userId: number): Promise<User> {
+  public async getUser(
+    @Param('id', ParseIntPipe) userId: number
+  ): Promise<Partial<UserModel>> {
     return await this.usersService.getUserById(userId);
-    
   }
 
   @Post('chat')

@@ -4,7 +4,7 @@ import { DatabaseService } from './database.service';
 import { Chat } from './entities/chat.entity';
 import { Message } from './entities/messages.entity';
 import { User } from './entities/users.entity';
-import { SequelizeModule } from '@nestjs/sequelize';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
@@ -12,16 +12,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
       useClass: DatabaseService,
     }),
     TypeOrmModule.forFeature([Message, User, Chat]),
-    SequelizeModule.forRoot({
-      dialect: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'squadly',
-      models: [],
-    }),
   ],
-  exports: [TypeOrmModule, SequelizeModule],
+  providers: [PrismaService],
+  exports: [TypeOrmModule, PrismaService],
 })
 export class DatabaseModule {}
