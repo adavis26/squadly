@@ -5,6 +5,7 @@ import { ChatModule } from './modules/chat/chat.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
+import { JwtStrategy } from './modules/auth/auth.strategy';
 
 @Module({
   imports: [
@@ -24,6 +25,6 @@ import { LoggerModule } from 'nestjs-pino';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [JwtStrategy],
 })
 export class AppModule {}
