@@ -15,6 +15,8 @@ import { GetUserPipe } from './pipes/get-user.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateChatComponent } from './components/create-chat/create-chat.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './interceptors/auth.interceptor';
 
 const matModules = [
   MatInputModule,
@@ -31,7 +33,15 @@ const matModules = [
 @NgModule({
   declarations: [NavComponent, GetUserPipe, CreateChatComponent],
   imports: [CommonModule, ...matModules, RouterModule],
-  providers: [ChatService, ChatSocketService],
+  providers: [
+    ChatService,
+    ChatSocketService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
   exports: [
     ...matModules,
     NavComponent,

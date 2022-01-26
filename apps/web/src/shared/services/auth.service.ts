@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
   public authurl = '/api/auth';
-  public userurl = '/api/user'
+  public userurl = '/api/user';
   constructor(private http: HttpClient) {}
 
   public loadUser(userId: number): Observable<User> {
@@ -18,13 +18,16 @@ export class AuthService {
 
   public login(data: LoginDTO): Observable<User> {
     return this.http
-      .post<User>(`${this.authurl}/login`, data)
-      .pipe(map((data) => data));
+      .post<{ user: User; access_token: string }>(`${this.authurl}/login`, data)
+      .pipe(
+        map((data) => {
+          localStorage.setItem('access_token', data.access_token);
+          return data.user;
+        })
+      );
   }
 
   public createUser(user: CreateUserDTO) {
-    return this.http
-      .post<User>(this.userurl, user)
-      .pipe(map((data) => data));
+    return this.http.post<User>(this.userurl, user).pipe(map((data) => data));
   }
 }
