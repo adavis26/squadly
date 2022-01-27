@@ -17,6 +17,8 @@ import { CreateChatComponent } from './components/create-chat/create-chat.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/auth.interceptor';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './guards/auth.guard';
 
 const matModules = [
   MatInputModule,
@@ -32,7 +34,19 @@ const matModules = [
 
 @NgModule({
   declarations: [NavComponent, GetUserPipe, CreateChatComponent],
-  imports: [CommonModule, ...matModules, RouterModule],
+  imports: [
+    CommonModule,
+    ...matModules,
+    RouterModule,
+    JwtModule.forRoot({
+      config: {
+        allowedDomains: ['localhost:4200', 'localhost:'],
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+      },
+    }),
+  ],
   providers: [
     ChatService,
     ChatSocketService,
@@ -41,6 +55,8 @@ const matModules = [
       useClass: JwtInterceptor,
       multi: true,
     },
+    JwtHelperService,
+    AuthGuard,
   ],
   exports: [
     ...matModules,

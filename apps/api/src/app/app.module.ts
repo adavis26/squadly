@@ -1,3 +1,4 @@
+import { CoreModule } from './core/core.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { Module } from '@nestjs/common';
@@ -6,9 +7,12 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 import { JwtStrategy } from './modules/auth/auth.strategy';
+import { JwtAuthGuard } from './modules/auth/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    CoreModule,
     AuthModule,
     UsersModule,
     ChatModule,
@@ -25,6 +29,12 @@ import { JwtStrategy } from './modules/auth/auth.strategy';
     }),
   ],
   controllers: [],
-  providers: [JwtStrategy],
+  providers: [
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CreateUserDTO, LoginDTO, User } from 'libs/core/src/lib/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,11 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   public authurl = '/api/auth';
   public userurl = '/api/user';
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private readonly router: Router,
+    private readonly jwtHelper: JwtHelperService
+  ) {}
 
   public loadUser(userId: number): Observable<User> {
     return this.http.get<User>(`${this.userurl}/${userId}`);
@@ -27,7 +33,21 @@ export class AuthService {
       );
   }
 
-  public createUser(user: CreateUserDTO) {
+  public validate(): boolean {
+    const accessToken = localStorage.getItem('access_token');
+    try {
+      return !this.jwtHelper.isTokenExpired(accessToken);
+    } catch {
+      return false;
+    }
+  }
+
+  public createUser(user: CreateUserDTO): Observable<User> {
     return this.http.post<User>(this.userurl, user).pipe(map((data) => data));
+  }
+
+  public logout(): void {
+    localStorage.removeItem('access_token');
+    this.router.navigate(['login']);
   }
 }

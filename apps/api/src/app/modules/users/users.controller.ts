@@ -37,7 +37,6 @@ export class UsersController {
   }
 
   @Get('/:id')
-  @UseGuards(JwtAuthGuard)
   public async getUser(
     @Param('id', ParseIntPipe) userId: number
   ): Promise<Partial<UserModel>> {

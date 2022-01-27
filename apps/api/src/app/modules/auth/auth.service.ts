@@ -11,7 +11,7 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  public async validate(
+  public async validateLogin(
     username: string,
     proposedPassword: string
   ): Promise<any> {
@@ -36,5 +36,16 @@ export class AuthService {
       user,
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  public async validateToken(accessToken: string): Promise<any> {
+    try {
+      const res = await this.jwtService.verifyAsync(accessToken, {
+        
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

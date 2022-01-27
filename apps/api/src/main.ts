@@ -4,7 +4,8 @@
  */
 
 import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
+import { JwtAuthGuard } from 'app/modules/auth/auth.guard';
 
 import { AppModule } from './app/app.module';
 

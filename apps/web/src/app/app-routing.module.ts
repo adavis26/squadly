@@ -6,6 +6,7 @@ import { ChatComponent } from './feature-modules/chat/chat.component';
 import { ChatResolver } from '../shared/resolver/chat.resolver';
 import { LoginComponent } from './feature-modules/login/login.component';
 import { SignUpComponent } from './feature-modules/login/sign-up/sign-up.component';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,15 +16,16 @@ const routes: Routes = [
     resolve: {
       chat: ChatResolver,
     },
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'signup',
-    component: SignUpComponent
-  }
+    component: SignUpComponent,
+  },
 ];
 
 @NgModule({

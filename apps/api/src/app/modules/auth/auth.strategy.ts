@@ -12,7 +12,7 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validate(username, password);
+    const user = await this.authService.validateLogin(username, password);
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -22,7 +22,7 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(JwtPassportStrategy) {
-  constructor() {
+  constructor(private authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -31,6 +31,8 @@ export class JwtStrategy extends PassportStrategy(JwtPassportStrategy) {
   }
 
   async validate(payload: any) {
+    // if (await this.authService.validateToken()) {
+    // }
     return { userId: payload.sub, username: payload.username };
   }
 }

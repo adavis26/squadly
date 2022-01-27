@@ -9,6 +9,8 @@ import { ChatService } from '../chat/chat.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthStrategy, JwtStrategy } from './auth.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth.guard';
 
 @Module({
   imports: [
