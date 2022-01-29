@@ -61,3 +61,18 @@ export const createChatFail = createAction(
   '[Chat] Set User Chats',
   props<{ error: any }>()
 );
+
+export const getChatsUser = createAction(
+  '[Chat] Get Chats User',
+  props<{ userId: number }>()
+);
+
+export const getChatsUserSuccess = createAction(
+  '[Chat] Get Chats User Success',
+  props<{ chats: IShortChat[] }>()
+);
+
+export const getChatsUserFail = createAction(
+  '[Chat] Get Chats User Failure',
+  props<{ error: any }>()
+);

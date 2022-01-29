@@ -4,12 +4,12 @@ import { User } from './user.interface';
 export interface IChat {
   messages: Message[];
   members: User[];
-  chatId: number;
+  id: number;
   name: string;
 }
 
 export interface IShortChat {
-  chatId: number;
+  id: number;
   name: string;
 }
 

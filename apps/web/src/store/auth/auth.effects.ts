@@ -40,8 +40,18 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.createUser),
       mergeMap(({ user }) =>
-        this.authService.logout().pipe(
-          switchMap(() => []),
+        this.authService.logout().pipe(switchMap(() => []))
+      )
+    )
+  );
+
+  verify$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.verify),
+      mergeMap(() =>
+        this.authService.verify().pipe(
+          switchMap((user) => [AuthActions.verifySuccess({ user })]),
+          catchError(() => of(AuthActions.logout()))
         )
       )
     )

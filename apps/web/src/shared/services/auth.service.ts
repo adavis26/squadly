@@ -33,7 +33,7 @@ export class AuthService {
       );
   }
 
-  public validate(): boolean {
+  public validateLocalToken(): boolean {
     const accessToken = localStorage.getItem('access_token');
     try {
       return !this.jwtHelper.isTokenExpired(accessToken);
@@ -44,6 +44,10 @@ export class AuthService {
 
   public createUser(user: CreateUserDTO): Observable<User> {
     return this.http.post<User>(this.userurl, user).pipe(map((data) => data));
+  }
+
+  public verify(): Observable<User>{
+    return this.http.get<User>(`${this.authurl}/verify`)
   }
 
   public logout(): Observable<any> {

@@ -25,7 +25,6 @@ export class JwtStrategy extends PassportStrategy(JwtPassportStrategy) {
   constructor() {
     super({
       jwtFromRequest: (req) => {
-        console.log(req)
         if (!req || !req.cookies) return null;
         return req.cookies['access_token'];
       },
@@ -35,9 +34,6 @@ export class JwtStrategy extends PassportStrategy(JwtPassportStrategy) {
   }
 
   async validate(payload: any) {
-    console.log("foo")
-    console.log(payload)
-    // this.authService.validateToken()
-    return { userId: payload.userId };
+    return payload;
   }
 }

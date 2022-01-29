@@ -18,4 +18,8 @@ export class ChatService {
   public createChat(chat: CreateChatDTO): Observable<IShortChat> {
     return this.http.post<IShortChat>(`${this.baseurl}`, chat);
   }
+
+  public getChatsUser(userId: number) {
+    return this.http.get<IShortChat[]>(`/api/user/${userId}/chats`);
+  }
 }

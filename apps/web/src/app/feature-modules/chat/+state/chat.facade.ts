@@ -22,19 +22,23 @@ export class ChatFacade {
 
   constructor(private store: Store) {}
 
-  public loadChat(chatId) {
+  public loadChat(chatId): void  {
     this.store.dispatch(ChatActions.loadChat({ chatId }));
   }
 
-  public sendMessage(message: MessageDTO) {
+  public sendMessage(message: MessageDTO): void  {
     this.store.dispatch(ChatActions.sendMessage({ message }));
   }
 
-  public addMessage(message: Message) {
+  public addMessage(message: Message): void  {
     this.store.dispatch(ChatActions.addMessage({ message }));
   }
 
   public createChat(chat: CreateChatDTO): void {
     this.store.dispatch(ChatActions.createChat({ chat }));
+  }
+
+  public getChatsUser(userId: number): void  {
+    this.store.dispatch(ChatActions.getChatsUser({userId}))
   }
 }

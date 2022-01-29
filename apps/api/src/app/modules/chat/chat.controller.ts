@@ -14,6 +14,7 @@ import { IChat, CreateChatDTO } from '@squadly/core';
 import { Chat } from 'app/database/entities/chat.entity';
 import { Chat as ChatModel } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/auth.guard';
+import { User } from 'app/core/decorators/user.decorator';
 
 @Controller('chat')
 export class ChatController {
@@ -27,7 +28,7 @@ export class ChatController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  public async createChat(@Body() chat: CreateChatDTO) {
-    this.chatService.createChat(chat);
+  public async createChat(@Body() chat: CreateChatDTO, @User() user) {
+    return await this.chatService.createChat(chat, user.id);
   }
 }

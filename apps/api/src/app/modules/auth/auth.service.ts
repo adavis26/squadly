@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   public async login(user: User) {
-    const payload = { username: user.username, sub: user.id };
+    const payload = { id: user.id };
     return {
       user,
       access_token: this.jwtService.sign(payload),
@@ -40,12 +40,10 @@ export class AuthService {
 
   public async validateToken(accessToken: string): Promise<any> {
     try {
-      const res = await this.jwtService.verifyAsync(accessToken, {
-        
-      });
+      const res = await this.jwtService.verifyAsync(accessToken, {});
       return true;
     } catch (e) {
-      console.log('e')
+      console.log('e');
       return false;
     }
   }

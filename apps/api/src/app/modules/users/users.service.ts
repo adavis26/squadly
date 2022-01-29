@@ -13,18 +13,16 @@ export class UsersService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly chatService: ChatService,
-    private prismaService: PrismaService
+    private readonly prismaService: PrismaService
   ) {}
 
   public async createUser(user: CreateUserDTO) {
     return await this.prismaService.user.create({
       data: user,
     });
-    return await this.userRepository.save(this.userRepository.create(user));
   }
 
   public async searchUser(query: string) {
-    // return await this.
     return await this.userRepository.find({
       where: [
         { first_name: ILike(`%${query}%`) },
@@ -36,6 +34,22 @@ export class UsersService {
   public async getUserById(userId: number): Promise<UserModel> {
     return await this.prismaService.user.findUnique({
       where: { id: userId },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        password: false,
+      },
+    });
+  }
+
+  public async getUsersByIds(userIds: number[]): Promise<UserModel[]> {
+    return this.prismaService.user.findMany({
+      where: {
+        id: { in: userIds },
+      },
       select: {
         id: true,
         username: true,

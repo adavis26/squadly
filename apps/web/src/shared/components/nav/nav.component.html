@@ -1,3 +1,5 @@
 <div class="nav-container">
-  <h1 class="title" [routerLink]="['/']" routerLinkActive="router-link-active" >squadly</h1>
+  <div></div>
+  <h1 [routerLink]="['/']" routerLinkActive="router-link-active" class="title">squadly</h1>
+  <div class="settings-container">{{(user$ | async)?.firstName}}</div>
 </div>

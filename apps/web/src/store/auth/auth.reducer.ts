@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { createReducer, on, Action } from '@ngrx/store';
 import { User } from 'libs/core/src';
 import * as AuthActions from './auth.actions';
@@ -43,7 +44,17 @@ const chatReducer = createReducer(
     isAuthenticated: false,
     isAuthenticating: false,
   })),
-  on(AuthActions.logout, (state) => initialState)
+  on(AuthActions.logout, () => initialState),
+  on(AuthActions.verifySuccess, (state, { user }) => ({
+    ...state,
+    isAuthenticating: true,
+  })),
+  on(AuthActions.verifySuccess, (state, { user }) => ({
+    ...state,
+    isAuthenticating: false,
+    isAuthenticated: true,
+    user,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

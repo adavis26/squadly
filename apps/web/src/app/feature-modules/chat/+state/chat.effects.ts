@@ -47,6 +47,18 @@ export class ChatEffects {
     )
   );
 
+  getChatsUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.getChatsUser),
+      mergeMap(({ userId }) =>
+        this.chatService.getChatsUser(userId).pipe(
+          map((chats) => ChatActions.getChatsUserSuccess({ chats })),
+          catchError((error) => of(ChatActions.getChatsUserFail({ error })))
+        )
+      )
+    )
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly chatService: ChatService,

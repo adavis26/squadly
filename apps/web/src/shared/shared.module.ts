@@ -19,6 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/auth.interceptor';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
+import { AppRoutingModule } from '../app/app-routing.module';
 
 const matModules = [
   MatInputModule,
@@ -45,7 +46,7 @@ const matModules = [
           return localStorage.getItem('access_token');
         },
       },
-    }),
+    })
   ],
   providers: [
     ChatService,

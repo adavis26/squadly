@@ -37,3 +37,15 @@ export const createUserFailure = createAction(
 );
 
 export const logout = createAction('[Auth] Logout');
+
+export const verify = createAction('[Auth] Verify');
+
+export const verifySuccess = createAction(
+  '[Auth] Verify Success',
+  props<{ user: User }>()
+);
+
+export const verifyFailure = createAction(
+  '[Auth] Verify Failure',
+  props<{ error: any }>()
+);

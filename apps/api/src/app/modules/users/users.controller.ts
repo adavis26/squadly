@@ -18,10 +18,14 @@ import {
 import { User as UserModel } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { ChatService } from '../chat/chat.service';
 
 @Controller('user')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly chatService: ChatService
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -51,5 +55,11 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   public async addUserToChat(@Body() payload: AddUserToChatDTO) {
     return await this.usersService.addUserToChat(payload);
+  }
+
+  @Get('/:id/chats')
+  @UseGuards(JwtAuthGuard)
+  public async getUserChats(@Param('id', ParseIntPipe) userId: number) {
+    return await this.chatService.getChatsByUserId(userId);
   }
 }

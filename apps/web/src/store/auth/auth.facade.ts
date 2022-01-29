@@ -18,7 +18,7 @@ export class AuthFacade {
     select(AuthSelectors.getIsAuthenticating)
   );
 
-  public selectedUser$ = this.store.pipe(select(AuthSelectors.getUser));
+public user$ = this.store.pipe(select(AuthSelectors.getUser));
   public selectedUserId$ = this.store.pipe(select(AuthSelectors.getUserId));
 
   constructor(private store: Store) {}
@@ -37,5 +37,9 @@ export class AuthFacade {
 
   public logout(): void{
     this.store.dispatch(AuthActions.logout());
+  }
+
+  public verify(): void {
+    this.store.dispatch(AuthActions.verify())
   }
 }
