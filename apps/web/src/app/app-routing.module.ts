@@ -9,7 +9,7 @@ import { SignUpComponent } from './feature-modules/login/sign-up/sign-up.compone
 import { AuthGuard } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   {
     path: 'chat/:id',
     component: ChatComponent,

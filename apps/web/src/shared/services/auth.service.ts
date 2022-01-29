@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateUserDTO, LoginDTO, User } from 'libs/core/src/lib/interfaces';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -46,8 +46,11 @@ export class AuthService {
     return this.http.post<User>(this.userurl, user).pipe(map((data) => data));
   }
 
-  public logout(): void {
+  public logout(): Observable<any> {
     localStorage.removeItem('access_token');
     this.router.navigate(['login']);
+
+
+    return of(true)
   }
 }

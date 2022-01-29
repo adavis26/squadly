@@ -42,7 +42,8 @@ const chatReducer = createReducer(
     error,
     isAuthenticated: false,
     isAuthenticating: false,
-  }))
+  })),
+  on(AuthActions.logout, (state) => initialState)
 );
 
 export function reducer(state: State | undefined, action: Action) {
