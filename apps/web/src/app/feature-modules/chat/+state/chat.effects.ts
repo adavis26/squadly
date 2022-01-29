@@ -24,10 +24,10 @@ export class ChatEffects {
   sendMessage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.sendMessage),
-      mergeMap(({ message }) => {
+      mergeMap(({ content }) => {
         try {
-          this.chatSocketService.sendMessage(message);
-          return of(ChatActions.sendMessageSuccess({ message }));
+          this.chatSocketService.sendMessage(content);
+          return of(ChatActions.sendMessageSuccess());
         } catch (error) {
           return of(ChatActions.sendMessageFail({ error }));
         }

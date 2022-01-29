@@ -3,12 +3,9 @@
     <button mat-stroked-button (click)="openCreateChatDialog()">create chat</button>
   </div>
   <div class="chats-container">
-    <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile *ngFor="let chat of (chats$ | async)">
-        <mat-card class="chat-card" [routerLink]="['chat', chat.id]" routerLinkActive="router-link-active">
-          {{chat.name}}
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
+    <mat-card *ngFor="let chat of (chats$| async)" [routerLink]="['chat', chat.id]"
+      routerLinkActive="router-link-active" style="max-width: 70%; margin-top: 1vh;">
+      {{chat.name}}
+    </mat-card>
   </div>
 </div>

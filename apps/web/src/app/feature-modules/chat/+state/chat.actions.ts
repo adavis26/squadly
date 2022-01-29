@@ -24,13 +24,10 @@ export const loadChatFailure = createAction(
 
 export const sendMessage = createAction(
   '[Chat] Send Message',
-  props<{ message: MessageDTO }>()
+  props<{ content: string }>()
 );
 
-export const sendMessageSuccess = createAction(
-  '[Chat] Send Message Success',
-  props<{ message: MessageDTO }>()
-);
+export const sendMessageSuccess = createAction('[Chat] Send Message Success');
 
 export const sendMessageFail = createAction(
   '[Chat] Send Message Fail',

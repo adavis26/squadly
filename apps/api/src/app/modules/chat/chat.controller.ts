@@ -31,4 +31,13 @@ export class ChatController {
   public async createChat(@Body() chat: CreateChatDTO, @User() user) {
     return await this.chatService.createChat(chat, user.id);
   }
+
+  @Post(':chatId/add/:userId')
+  @UseGuards(JwtAuthGuard)
+  public async addUserToChat(
+    @Param('chatId', ParseIntPipe) chatId: number,
+    @Param('userId', ParseIntPipe) userId: number
+  ) {
+    return this.chatService.addUserToChat(chatId, userId);
+  }
 }

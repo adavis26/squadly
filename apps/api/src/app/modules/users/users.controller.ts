@@ -28,7 +28,6 @@ export class UsersController {
   ) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   public async createUser(@Body() user: CreateUserDTO) {
     return await this.usersService.createUser(user);
   }
@@ -51,11 +50,6 @@ export class UsersController {
     return await this.usersService.getUserById(userId);
   }
 
-  @Post('chat')
-  @UseGuards(JwtAuthGuard)
-  public async addUserToChat(@Body() payload: AddUserToChatDTO) {
-    return await this.usersService.addUserToChat(payload);
-  }
 
   @Get('/:id/chats')
   @UseGuards(JwtAuthGuard)

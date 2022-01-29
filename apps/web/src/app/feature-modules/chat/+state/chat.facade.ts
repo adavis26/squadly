@@ -26,8 +26,8 @@ export class ChatFacade {
     this.store.dispatch(ChatActions.loadChat({ chatId }));
   }
 
-  public sendMessage(message: MessageDTO): void  {
-    this.store.dispatch(ChatActions.sendMessage({ message }));
+  public sendMessage(content: string): void  {
+    this.store.dispatch(ChatActions.sendMessage({ content }));
   }
 
   public addMessage(message: Message): void  {

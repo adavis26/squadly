@@ -11,11 +11,16 @@ import {
 import { MessageDTO } from '../../../../../../libs/core/src/lib/interfaces';
 import { ChatService } from './chat.service';
 import { Client, Server, Socket } from 'socket.io';
+import { PrismaService } from 'app/database/prisma.service';
+import { Messages } from '@prisma/client';
 
 @WebSocketGateway({ cors: true })
 export class ChatGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
-  constructor(private readonly chatService: ChatService) {}
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly prismaService: PrismaService
+  ) {}
 
   @WebSocketServer()
   ws: Server;
@@ -30,7 +35,10 @@ export class ChatGateway
     @MessageBody() message: MessageDTO,
     @ConnectedSocket() client: Socket
   ) {
-    const responseMessage = await this.chatService.saveMessage(message);
+    console.log(message);
+    const responseMessage = await this.prismaService.messages.create({
+      data: message,
+    });
     await this.ws.emit('message:recieve', responseMessage);
   }
 

@@ -44,6 +44,7 @@ export class ChatService {
         where: { id: chatId },
         include: {
           members: true,
+          messages: true,
         },
       })
       .then(async (chat) => ({
@@ -98,6 +99,15 @@ export class ChatService {
     const savedEntity = await this.messagesRepository.save(entity);
 
     return await this.getMessage(savedEntity.id);
+  }
+
+  public async addUserToChat(chatId: number, userId: number) {
+    await this.prismaService.chatMembers.create({
+      data: {
+        chatId,
+        userId,
+      },
+    });
   }
 
   private async getChatMembers(members: ChatMembers[]) {
