@@ -37,7 +37,14 @@ export class JwtInterceptor implements HttpInterceptor {
         )
       );
     } else {
-      return next.handle(req);
+      return next.handle(req).pipe(
+        tap(
+          () => {},
+          (err: any) => {
+            this.handleLogout(err);
+          }
+        )
+      );
     }
   }
 
