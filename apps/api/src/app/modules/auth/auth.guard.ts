@@ -12,35 +12,38 @@ import { AuthService } from './auth.service';
 export class LocalAuthGuard extends AuthGuard('local') {}
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
-  constructor(
-    private readonly reflector: Reflector,
-    private readonly authService: AuthService
-  ) {
-    super();
-  }
+export class JwtAuthGuard extends AuthGuard('jwt') {}
 
-  public async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const skipJwt = this.reflector.get<boolean>(
-      'SkipJwt',
-      context.getHandler()
-    );
+// @Injectable()
+// export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
+//   constructor(
+//     private readonly reflector: Reflector,
+//     private readonly authService: AuthService
+//   ) {
+//     super();
+//   }
 
-    if (skipJwt) {
-      return true;
-    }
+//   public async canActivate(context: ExecutionContext): Promise<boolean> {
+//     const request = context.switchToHttp().getRequest();
+//     const skipJwt = this.reflector.get<boolean>(
+//       'SkipJwt',
+//       context.getHandler()
+//     );
 
-    const accessToken = request.headers['authorization'];
-    console.log(request.headers);
-    console.log(accessToken);
+//     if (skipJwt) {
+//       return true;
+//     }
 
-    const ans = await this.authService.validateToken(accessToken);
+//     const accessToken = request.headers['authorization'];
 
-    if (!ans) {
-      throw new UnauthorizedException();
-    }
+//     console.log(accessToken)
 
-    return true;
-  }
-}
+//     const ans = await this.authService.validateToken(accessToken);
+
+//     if (!ans) {
+//       throw new UnauthorizedException();
+//     }
+
+//     return true;
+//   }
+// }

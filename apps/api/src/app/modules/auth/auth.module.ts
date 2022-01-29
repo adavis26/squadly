@@ -20,7 +20,6 @@ import { JwtAuthGuard } from './auth.guard';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
     }),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [AuthController],
   providers: [
@@ -29,7 +28,6 @@ import { JwtAuthGuard } from './auth.guard';
     ChatService,
     AuthStrategy,
     JwtStrategy,
-  ],
-  exports: [AuthService, JwtStrategy, JwtModule, PassportModule],
+  ]
 })
 export class AuthModule {}

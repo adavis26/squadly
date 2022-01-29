@@ -22,17 +22,22 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(JwtPassportStrategy) {
-  constructor(private authService: AuthService) {
+  constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: (req) => {
+        console.log(req)
+        if (!req || !req.cookies) return null;
+        return req.cookies['access_token'];
+      },
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
     });
   }
 
   async validate(payload: any) {
-    // if (await this.authService.validateToken()) {
-    // }
-    return { userId: payload.sub, username: payload.username };
+    console.log("foo")
+    console.log(payload)
+    // this.authService.validateToken()
+    return { userId: payload.userId };
   }
 }
