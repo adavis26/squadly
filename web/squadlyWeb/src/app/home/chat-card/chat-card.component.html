@@ -1,6 +1,0 @@
-<div class="chat-container pl-3">
-    <div *ngFor="let chat of chats$ | async" class="chat-card" [style.background-color]="chat.bg_color" [routerLink]="['/chat', chat._id]">
-        <h5>{{chat.name}}</h5>
-        <p>{{chat.description}}</p>
-    </div>
-</div>

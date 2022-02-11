@@ -24,14 +24,38 @@ export class ChatEffects {
   sendMessage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.sendMessage),
-      mergeMap(({ message }) => {
+      mergeMap(({ content }) => {
         try {
-          this.chatSocketService.sendMessage(message);
-          return of(ChatActions.sendMessageSuccess({ message }));
+          this.chatSocketService.sendMessage(content);
+          return of(ChatActions.sendMessageSuccess());
         } catch (error) {
           return of(ChatActions.sendMessageFail({ error }));
         }
       })
+    )
+  );
+
+  createChat$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.createChat),
+      mergeMap(({ chat }) =>
+        this.chatService.createChat(chat).pipe(
+          map((chat) => ChatActions.createChatSuccess({ chat })),
+          catchError((error) => of(ChatActions.createChatFail({ error })))
+        )
+      )
+    )
+  );
+
+  getChatsUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.getChatsUser),
+      mergeMap(({ userId }) =>
+        this.chatService.getChatsUser(userId).pipe(
+          map((chats) => ChatActions.getChatsUserSuccess({ chats })),
+          catchError((error) => of(ChatActions.getChatsUserFail({ error })))
+        )
+      )
     )
   );
 

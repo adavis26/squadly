@@ -12,6 +12,13 @@ import { NavComponent } from './components/nav/nav.component';
 import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { GetUserPipe } from './pipes/get-user.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CreateChatComponent } from './components/create-chat/create-chat.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './interceptors/auth.interceptor';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './guards/auth.guard';
 
 const matModules = [
   MatInputModule,
@@ -21,12 +28,43 @@ const matModules = [
   MatDividerModule,
   MatCardModule,
   MatGridListModule,
+  ReactiveFormsModule,
+  MatDialogModule,
+  MatCardModule
 ];
 
 @NgModule({
-  declarations: [NavComponent, GetUserPipe],
-  imports: [CommonModule, ...matModules, RouterModule],
-  providers: [ChatService, ChatSocketService],
-  exports: [...matModules, NavComponent, GetUserPipe],
+  declarations: [NavComponent, GetUserPipe, CreateChatComponent],
+  imports: [
+    CommonModule,
+    ...matModules,
+    RouterModule,
+    JwtModule.forRoot({
+      config: {
+        allowedDomains: ['localhost:4200', 'localhost:'],
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+      },
+    })
+  ],
+  providers: [
+    ChatService,
+    ChatSocketService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+    JwtHelperService,
+    AuthGuard,
+  ],
+  exports: [
+    ...matModules,
+    NavComponent,
+    CreateChatComponent,
+    GetUserPipe,
+    MatDialogModule,
+  ],
 })
 export class SharedModule {}

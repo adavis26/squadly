@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  CreateChatDTO,
   IChat,
   IShortChat,
   Message,
@@ -23,13 +24,10 @@ export const loadChatFailure = createAction(
 
 export const sendMessage = createAction(
   '[Chat] Send Message',
-  props<{ message: MessageDTO }>()
+  props<{ content: string }>()
 );
 
-export const sendMessageSuccess = createAction(
-  '[Chat] Send Message Success',
-  props<{ message: MessageDTO }>()
-);
+export const sendMessageSuccess = createAction('[Chat] Send Message Success');
 
 export const sendMessageFail = createAction(
   '[Chat] Send Message Fail',
@@ -44,4 +42,34 @@ export const addMessage = createAction(
 export const setUserChats = createAction(
   '[Chat] Set User Chats',
   props<{ chats: IShortChat[] }>()
+);
+
+export const createChat = createAction(
+  '[Chat] Create Chat',
+  props<{ chat: CreateChatDTO }>()
+);
+
+export const createChatSuccess = createAction(
+  '[Chat] Set User Chats',
+  props<{ chat: IShortChat }>()
+);
+
+export const createChatFail = createAction(
+  '[Chat] Set User Chats',
+  props<{ error: any }>()
+);
+
+export const getChatsUser = createAction(
+  '[Chat] Get Chats User',
+  props<{ userId: number }>()
+);
+
+export const getChatsUserSuccess = createAction(
+  '[Chat] Get Chats User Success',
+  props<{ chats: IShortChat[] }>()
+);
+
+export const getChatsUserFail = createAction(
+  '[Chat] Get Chats User Failure',
+  props<{ error: any }>()
 );

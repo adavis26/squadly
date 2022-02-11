@@ -1,23 +1,25 @@
-<div [hidden]="!(chat$ | async)" class="chat-container">
-  <div class="header">
-    {{(chat$ | async)?.name}}
+<div [hidden]="!(chat$ | async)" class="chat-container" [style.height.px]="screenHeight - 200">
+  <div class="header"t>
+    <h3>
+      {{(chat$ | async)?.name}}
+    </h3>
   </div>
 
   <div class="messages-container" #messageContainer>
     <ng-container *ngFor="let message of (chat$ | async)?.messages; let i=index">
-      <app-message [message]="message" [user]="(message.userId | getUser) | async" [currentUserId]="selectedUserId$ | async"></app-message>
+      <app-message [message]="message" [user]="(message.userId | getUser) | async"
+        [currentUserId]="selectedUserId$ | async"></app-message>
     </ng-container>
   </div>
 
   <div class="input-container">
-    <mat-divider></mat-divider>
-    <form (ngSubmit)="sendMessage()" style="width: 100%;">
-      <mat-form-field>
-        <input [(ngModel)]="content" name="content" matInput type="text" autocomplete="off">
-        <button mat-button matSuffix mat-icon-button aria-label="Clear">
-          <mat-icon>send</mat-icon>
-        </button>
-      </mat-form-field>
+    <form (ngSubmit)="sendMessage()" [formGroup]="chatForm" style="width: 100%;">
+      <div style="place-items: center; display: grid;margin-bottom: 10px;">
+        <div style="display: flex; width: 80%">
+          <input formControlName="content" class="input-field">
+          <button mat-button [disabled]="chatForm.controls.content.invalid">Send</button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

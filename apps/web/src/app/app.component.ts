@@ -19,9 +19,7 @@ export class AppComponent implements OnInit {
     this.windowHeight = window.innerHeight;
   }
 
-  ngOnInit() {
-    this.authFacade.loadUser(1);
-  }
+  ngOnInit() {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

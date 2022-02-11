@@ -20,7 +20,7 @@ export interface ChatPartialState {
 }
 
 const initialState: State = {
-  chats: [],
+  chats: null,
   loaded: false,
   loading: false,
   selectedChat: null,
@@ -48,9 +48,16 @@ const chatReducer = createReducer(
       messages: [...state.selectedChat.messages, message],
     },
   })),
-  on(ChatActions.setUserChats, (state, { chats }) => ({
+  on(ChatActions.getChatsUser, (state) => ({
+    ...state,
+  })),
+  on(ChatActions.getChatsUserSuccess, (state, { chats }) => ({
     ...state,
     chats,
+  })),
+  on(ChatActions.getChatsUserFail, (state, { error }) => ({
+    ...state,
+    error
   }))
 );
 

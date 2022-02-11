@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { select, Store, Action } from '@ngrx/store';
-import { Message, MessageDTO } from 'libs/core/src/lib/interfaces';
+import {
+  Message,
+  MessageDTO,
+  CreateChatDTO,
+} from 'libs/core/src/lib/interfaces';
 import * as ChatActions from './chat.actions';
 import * as ChatSelectors from './chat.selectors';
 
@@ -18,15 +22,23 @@ export class ChatFacade {
 
   constructor(private store: Store) {}
 
-  public loadChat(chatId) {
+  public loadChat(chatId): void  {
     this.store.dispatch(ChatActions.loadChat({ chatId }));
   }
 
-  public sendMessage(message: MessageDTO) {
-    this.store.dispatch(ChatActions.sendMessage({ message }));
+  public sendMessage(content: string): void  {
+    this.store.dispatch(ChatActions.sendMessage({ content }));
   }
 
-  public addMessage(message: Message) {
+  public addMessage(message: Message): void  {
     this.store.dispatch(ChatActions.addMessage({ message }));
+  }
+
+  public createChat(chat: CreateChatDTO): void {
+    this.store.dispatch(ChatActions.createChat({ chat }));
+  }
+
+  public getChatsUser(userId: number): void  {
+    this.store.dispatch(ChatActions.getChatsUser({userId}))
   }
 }

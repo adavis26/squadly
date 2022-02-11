@@ -7,6 +7,7 @@ export class CreateUsersSchema1635727276711 implements MigrationInterface {
                 id integer NOT NULL,
                 first_name character varying COLLATE pg_catalog."default",
                 last_name character varying COLLATE pg_catalog."default",
+                password  character varying NOT NULL,
                 CONSTRAINT users_pkey PRIMARY KEY (id)
         )`);
   }
