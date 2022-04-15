@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateChatDTO, IShortChat } from 'libs/core/src';
+import { CreateChatDTO, DeleteChatResponse, IShortChat } from 'libs/core/src';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class ChatService {
 
   public createChat(chat: CreateChatDTO): Observable<IShortChat> {
     return this.http.post<IShortChat>(`${this.baseurl}`, chat);
+  }
+
+  public deleteChat(chatId: number): Observable<DeleteChatResponse> {
+    return this.http.delete<DeleteChatResponse>(`${this.baseurl}/${chatId}`);
   }
 
   public getChatsUser(userId: number) {

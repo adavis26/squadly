@@ -5,7 +5,12 @@ import { Repository } from 'typeorm';
 import { CreateChatDTO, IChat, MessageDTO } from '@squadly/core';
 import { Message } from '../../database/entities/messages.entity';
 import { PrismaService } from 'app/database/prisma.service';
-import { Chat as ChatModel, ChatMembers, PrismaClient } from '@prisma/client';
+import {
+  Chat as ChatModel,
+  ChatMembers,
+  prisma,
+  PrismaClient,
+} from '@prisma/client';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -18,10 +23,10 @@ export class ChatService {
     private readonly prismaService: PrismaService
   ) {}
 
-  public async createChat(chat: CreateChatDTO, userId: number) {
-    const createdChat = await this.prismaService.chat.create({
+  public async createChat(chatDTO: CreateChatDTO, userId: number) {
+    const createdChat: Partial<Chat> = await this.prismaService.chat.create({
       data: {
-        ...chat,
+        name: chatDTO.name,
         members: {
           create: [
             {
@@ -32,10 +37,14 @@ export class ChatService {
       },
     });
 
-    return {
-      ...chat,
-      members: await this.getChatMembers(createdChat.members),
-    };
+    return await this.prismaService.chat.findUnique({
+      where: {
+        id: createdChat.id,
+      },
+      include: {
+        members: true,
+      },
+    });
   }
 
   public async getChat(chatId: number): Promise<Chat> {
@@ -51,6 +60,42 @@ export class ChatService {
         ...chat,
         members: await this.getChatMembers(chat.members),
       }));
+  }
+
+  public async deleteChat(chatId: number): Promise<any> {
+    const deleteChatMembers = this.prismaService.chatMembers.deleteMany({
+      where: {
+        chatId: chatId,
+      },
+    });
+
+    const deleteMessages = this.prismaService.messages.deleteMany({
+      where: {
+        chatId: chatId,
+      },
+    });
+
+    const deleteChat = this.prismaService.chat.delete({
+      where: {
+        id: chatId,
+      },
+    });
+
+    const [
+      messagesDeletedCount,
+      membersDeletedCount,
+      chatDeleted,
+    ] = await this.prismaService.$transaction([
+      deleteMessages,
+      deleteChatMembers,
+      deleteChat,
+    ]);
+
+    return {
+      messagesDeletedCount,
+      membersDeletedCount,
+      chatDeleted,
+    };
   }
 
   public async getChatsByUserId(userId: number): Promise<ChatModel[]> {

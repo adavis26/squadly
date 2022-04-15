@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -38,6 +39,14 @@ export class ChatController {
     @Param('chatId', ParseIntPipe) chatId: number,
     @Param('userId', ParseIntPipe) userId: number
   ) {
-    return this.chatService.addUserToChat(chatId, userId);
+    return await this.chatService.addUserToChat(chatId, userId);
+  }
+
+  @Delete(':chatId')
+  @UseGuards(JwtAuthGuard)
+  public async deleteChat(
+    @Param('chatId', ParseIntPipe) chatId: number
+  ) {
+    return await this.chatService.deleteChat(chatId);
   }
 }

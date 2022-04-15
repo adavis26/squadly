@@ -58,6 +58,10 @@ const chatReducer = createReducer(
   on(ChatActions.getChatsUserFail, (state, { error }) => ({
     ...state,
     error
+  })),
+  on(ChatActions.deleteChatSuccess, (state, { chatId }) => ({
+    ...state,
+    chats: state.chats.filter(chat => chat.id !== chatId)
   }))
 );
 

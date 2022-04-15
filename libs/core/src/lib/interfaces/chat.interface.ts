@@ -16,3 +16,9 @@ export interface IShortChat {
 export interface CreateChatDTO {
   name: string;
 }
+
+export interface DeleteChatResponse {
+  messagesDeletedCount: { count: number };
+  membersDeletedCount: { count: number };
+  chatDeleted: { id: number; name: string };
+}

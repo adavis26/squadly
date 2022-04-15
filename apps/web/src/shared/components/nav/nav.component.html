@@ -1,5 +1,8 @@
 <div class="nav-container">
   <div></div>
   <h1 [routerLink]="['/']" routerLinkActive="router-link-active" class="title">squadly</h1>
-  <div class="settings-container">{{(user$ | async)?.firstName}}</div>
+  <button class="settings-container" mat-button [matMenuTriggerFor]="menu">{{(user$ | async)?.firstName}}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">logout</button>
+  </mat-menu>
 </div>

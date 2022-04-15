@@ -25,6 +25,12 @@ export const getSelectedChat = createSelector(
   (state: State) => state.selectedChat
 );
 
+export const getSelectedChatId = createSelector(
+  getChatState,
+  (state: State) => state.selectedChat?.id
+);
+
+
 export const getUser = createSelector(
   getChatState,
   (state: State, userId: number) =>

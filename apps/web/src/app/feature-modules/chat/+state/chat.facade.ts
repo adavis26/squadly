@@ -14,6 +14,9 @@ export class ChatFacade {
   // allChat$ = this.store.pipe(select(ChatSelectors.getSelectedChat));
 
   public selectedChat$ = this.store.pipe(select(ChatSelectors.getSelectedChat));
+  public selectedChatId$ = this.store.pipe(
+    select(ChatSelectors.getSelectedChatId)
+  );
 
   public chats$ = this.store.pipe(select(ChatSelectors.selectChats));
 
@@ -22,15 +25,19 @@ export class ChatFacade {
 
   constructor(private store: Store) {}
 
-  public loadChat(chatId): void  {
+  public loadChat(chatId): void {
     this.store.dispatch(ChatActions.loadChat({ chatId }));
   }
 
-  public sendMessage(content: string): void  {
+  public joinChat(chatId: number, userId: number): void {
+    this.store.dispatch(ChatActions.joinChat({ chatId, userId }));
+  }
+
+  public sendMessage(content: string): void {
     this.store.dispatch(ChatActions.sendMessage({ content }));
   }
 
-  public addMessage(message: Message): void  {
+  public addMessage(message: Message): void {
     this.store.dispatch(ChatActions.addMessage({ message }));
   }
 
@@ -38,7 +45,11 @@ export class ChatFacade {
     this.store.dispatch(ChatActions.createChat({ chat }));
   }
 
-  public getChatsUser(userId: number): void  {
-    this.store.dispatch(ChatActions.getChatsUser({userId}))
+  public getChatsUser(userId: number): void {
+    this.store.dispatch(ChatActions.getChatsUser({ userId }));
+  }
+
+  public deleteChat(chatId: number): void {
+    this.store.dispatch(ChatActions.deleteChat({ chatId }));
   }
 }

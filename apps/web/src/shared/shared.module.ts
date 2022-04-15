@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 import { ChatService } from './services/chat.service';
 import { ChatSocketService } from './services/chat.socket.service';
 import { MatCardModule } from '@angular/material/card';
@@ -30,7 +31,8 @@ const matModules = [
   MatGridListModule,
   ReactiveFormsModule,
   MatDialogModule,
-  MatCardModule
+  MatCardModule,
+  MatMenuModule
 ];
 
 @NgModule({
@@ -46,7 +48,7 @@ const matModules = [
           return localStorage.getItem('access_token');
         },
       },
-    })
+    }),
   ],
   providers: [
     ChatService,
