@@ -101,3 +101,4 @@ export const deleteChatFail = createAction(
   props<{ error: any }>()
 );
 
+export const logout = createAction('[Chat] Logout');

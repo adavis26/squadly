@@ -4,6 +4,7 @@ import {
   IChat,
   IShortChat,
 } from '../../../../../../../libs/core/src/lib/interfaces';
+import { state } from '@angular/animations';
 
 export const CHAT_FEATURE_KEY = 'chat';
 
@@ -57,11 +58,16 @@ const chatReducer = createReducer(
   })),
   on(ChatActions.getChatsUserFail, (state, { error }) => ({
     ...state,
-    error
+    error,
   })),
   on(ChatActions.deleteChatSuccess, (state, { chatId }) => ({
     ...state,
-    chats: state.chats.filter(chat => chat.id !== chatId)
+    chats: state.chats.filter((chat) => chat.id !== chatId),
+  })),
+  on(ChatActions.logout, (state) => initialState),
+  on(ChatActions.createChatSuccess, (state, { chat }) => ({
+    ...state,
+    chats: [...state.chats, chat],
   }))
 );
 
