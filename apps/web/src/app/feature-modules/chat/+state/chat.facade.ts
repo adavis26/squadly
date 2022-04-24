@@ -52,4 +52,8 @@ export class ChatFacade {
   public deleteChat(chatId: number): void {
     this.store.dispatch(ChatActions.deleteChat({ chatId }));
   }
+
+  public addUserToChat(chatId: number, userId: number): void {
+    this.store.dispatch(ChatActions.addUserToChat({chatId, userId}))
+  }
 }

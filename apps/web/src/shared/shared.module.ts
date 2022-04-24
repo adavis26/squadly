@@ -20,6 +20,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/auth.interceptor';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 const matModules = [
   MatInputModule,
@@ -32,11 +33,16 @@ const matModules = [
   ReactiveFormsModule,
   MatDialogModule,
   MatCardModule,
-  MatMenuModule
+  MatMenuModule,
 ];
 
 @NgModule({
-  declarations: [NavComponent, GetUserPipe, CreateChatComponent],
+  declarations: [
+    NavComponent,
+    GetUserPipe,
+    CreateChatComponent,
+    AddUserComponent,
+  ],
   imports: [
     CommonModule,
     ...matModules,
@@ -67,6 +73,7 @@ const matModules = [
     CreateChatComponent,
     GetUserPipe,
     MatDialogModule,
+    AddUserComponent
   ],
 })
 export class SharedModule {}

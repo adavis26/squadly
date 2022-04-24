@@ -4,7 +4,6 @@ import {
   IChat,
   IShortChat,
 } from '../../../../../../../libs/core/src/lib/interfaces';
-import { state } from '@angular/animations';
 
 export const CHAT_FEATURE_KEY = 'chat';
 

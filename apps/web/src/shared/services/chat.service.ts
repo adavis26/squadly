@@ -26,4 +26,8 @@ export class ChatService {
   public getChatsUser(userId: number) {
     return this.http.get<IShortChat[]>(`/api/user/${userId}/chats`);
   }
+
+  public addUserToChat(chatId: number, userId: number) {
+    return this.http.post<any[]>(`/api/chat/${chatId}/add/${userId}`, {});
+  }
 }

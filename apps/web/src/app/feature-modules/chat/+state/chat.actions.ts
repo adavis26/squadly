@@ -102,3 +102,18 @@ export const deleteChatFail = createAction(
 );
 
 export const logout = createAction('[Chat] Logout');
+
+export const addUserToChat = createAction(
+  '[Chat] Add User To Chat',
+  props<{ chatId: number; userId: number }>()
+);
+
+export const addUserToChatSuccess = createAction(
+  '[Chat] Add User To Chat Success',
+  props<{ members: any[] }>()
+);
+
+export const addUserToChatFail = createAction(
+  '[Chat] Add User To Chat Failure',
+  props<{ error: any }>()
+);

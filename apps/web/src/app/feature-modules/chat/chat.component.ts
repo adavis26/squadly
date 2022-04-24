@@ -12,6 +12,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddUserComponent } from 'apps/web/src/shared/components/add-user/add-user.component';
 import { AuthFacade } from 'apps/web/src/store/auth/auth.facade';
 import { IChat } from 'libs/core/src';
 import { combineLatest, Observable, Subscription } from 'rxjs';
@@ -24,7 +26,6 @@ import { ChatFacade } from './+state/chat.facade';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
-
   public content: string = '';
   public chatId: number;
   public screenHeight: number;
@@ -51,7 +52,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     private chatFacade: ChatFacade,
     private authFacade: AuthFacade,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.screenHeight = window.innerHeight;
   }
@@ -67,14 +69,16 @@ export class ChatComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.joinSub$ = combineLatest([this.chatId$, this.selectedUserId$]).subscribe(
-      ([chatId, userId]) => {
-        if (chatId && userId && !this.chatJoined) {
-          this.chatFacade.joinChat(chatId, userId);
-          this.chatJoined = true;
-        }
+    this.joinSub$ = combineLatest([
+      this.chatId$,
+      this.selectedUserId$,
+    ]).subscribe(([chatId, userId]) => {
+      if (chatId && userId && !this.chatJoined) {
+        this.chatId = chatId;
+        this.chatFacade.joinChat(chatId, userId);
+        this.chatJoined = true;
       }
-    );
+    });
 
     this.chatForm = this.fb.group({
       content: new FormControl('', [Validators.required]),
@@ -86,6 +90,15 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 10);
   }
+
+  public openAddUserDialog() {
+    this.dialog.open(AddUserComponent, {
+      data: {
+        chatId: this.chatId,
+      },
+    });
+  }
+
 
   public sendMessage() {
     this.chatFacade.sendMessage(this.chatForm.controls.content.value);
