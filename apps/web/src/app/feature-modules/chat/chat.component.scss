@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  word-break: break-all;
 }
 
 .messages-container {
@@ -59,4 +60,6 @@
   border-bottom-style: solid;
   border-bottom-width: 0.5px;
   border-bottom-color: lightgrey;
+  display: flex;
+  justify-content: space-between;
 }

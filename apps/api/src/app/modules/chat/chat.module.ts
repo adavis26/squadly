@@ -9,6 +9,6 @@ import { UsersService } from '../users/users.service';
 @Module({
   imports: [DatabaseModule, UsersModule],
   controllers: [ChatController],
-  providers: [ChatService, ChatGateway],
+  providers: [ChatService, ChatGateway, ],
 })
 export class ChatModule {}

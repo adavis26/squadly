@@ -22,6 +22,18 @@ export const loadChatFailure = createAction(
   props<{ error: any }>()
 );
 
+export const joinChat = createAction(
+  '[Chat] Join Chat',
+  props<{ chatId: number; userId: number }>()
+);
+
+export const joinChatSuccess = createAction('[Chat] Join Chat Success');
+
+export const joinChatFail = createAction(
+  '[Chat] Join Chat Fail',
+  props<{ error: any }>()
+);
+
 export const sendMessage = createAction(
   '[Chat] Send Message',
   props<{ content: string }>()
@@ -71,5 +83,37 @@ export const getChatsUserSuccess = createAction(
 
 export const getChatsUserFail = createAction(
   '[Chat] Get Chats User Failure',
+  props<{ error: any }>()
+);
+
+export const deleteChat = createAction(
+  '[Chat] Delete Chat',
+  props<{ chatId: number }>()
+);
+
+export const deleteChatSuccess = createAction(
+  '[Chat] Delete Chat Success',
+  props<{ chatId: number }>()
+);
+
+export const deleteChatFail = createAction(
+  '[Chat] Delete Chat Failure',
+  props<{ error: any }>()
+);
+
+export const logout = createAction('[Chat] Logout');
+
+export const addUserToChat = createAction(
+  '[Chat] Add User To Chat',
+  props<{ chatId: number; userId: number }>()
+);
+
+export const addUserToChatSuccess = createAction(
+  '[Chat] Add User To Chat Success',
+  props<{ members: any[] }>()
+);
+
+export const addUserToChatFail = createAction(
+  '[Chat] Add User To Chat Failure',
   props<{ error: any }>()
 );

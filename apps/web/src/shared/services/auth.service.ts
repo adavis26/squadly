@@ -52,6 +52,7 @@ export class AuthService {
 
   public logout(): Observable<any> {
     localStorage.removeItem('access_token');
+    document.cookie = ""
     this.router.navigate(['login']);
 
 

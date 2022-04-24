@@ -57,7 +57,16 @@ const chatReducer = createReducer(
   })),
   on(ChatActions.getChatsUserFail, (state, { error }) => ({
     ...state,
-    error
+    error,
+  })),
+  on(ChatActions.deleteChatSuccess, (state, { chatId }) => ({
+    ...state,
+    chats: state.chats.filter((chat) => chat.id !== chatId),
+  })),
+  on(ChatActions.logout, (state) => initialState),
+  on(ChatActions.createChatSuccess, (state, { chat }) => ({
+    ...state,
+    chats: [...state.chats, chat],
   }))
 );
 

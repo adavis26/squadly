@@ -38,9 +38,9 @@ export class AuthEffects {
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.createUser),
-      mergeMap(({ user }) =>
-        this.authService.logout().pipe(switchMap(() => []))
+      ofType(AuthActions.logout),
+      mergeMap(() =>
+        this.authService.logout().pipe(switchMap(() => [ChatActions.logout()]))
       )
     )
   );

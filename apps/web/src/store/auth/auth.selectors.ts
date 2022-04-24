@@ -12,7 +12,7 @@ export const getUser = createSelector(
 
 export const getUserId = createSelector(
   getAuthState,
-  (state: State) => state.user.id
+  (state: State) => state.user?.id
 );
 
 export const getUserError = createSelector(

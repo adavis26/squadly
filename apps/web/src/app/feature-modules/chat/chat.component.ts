@@ -12,9 +12,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddUserComponent } from 'apps/web/src/shared/components/add-user/add-user.component';
 import { AuthFacade } from 'apps/web/src/store/auth/auth.facade';
 import { IChat } from 'libs/core/src';
-import { Observable, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { ChatFacade } from './+state/chat.facade';
 
 @Component({
@@ -23,16 +26,22 @@ import { ChatFacade } from './+state/chat.facade';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  public chat$: Observable<IChat>;
   public content: string = '';
   public chatId: number;
   public screenHeight: number;
+  public chatJoined: boolean = false;
 
   @ViewChild('messageContainer', { read: ElementRef })
   public messageContainer: ElementRef;
-  public chatSub$: Subscription;
-  public selectedUserId$: Observable<number>;
 
+  // subs
+  public chat$: Observable<IChat>;
+  public selectedUserId$: Observable<number>;
+  public chatId$: Observable<number>;
+  public chatSub$: Subscription;
+  public joinSub$: Subscription;
+
+  // form
   public chatForm: FormGroup;
 
   @HostListener('window:resize', ['$event'])
@@ -43,18 +52,31 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     private chatFacade: ChatFacade,
     private authFacade: AuthFacade,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.screenHeight = window.innerHeight;
   }
 
   ngOnInit(): void {
     this.chat$ = this.chatFacade.selectedChat$;
+    this.chatId$ = this.chatFacade.selectedChatId$;
     this.selectedUserId$ = this.authFacade.selectedUserId$;
 
-    this.chatSub$ = this.chat$.subscribe((_chat) => {
-      if (_chat?.messages.length) {
+    this.chatSub$ = this.chat$.subscribe((chat) => {
+      if (chat?.messages?.length) {
         this.autoScroll();
+      }
+    });
+
+    this.joinSub$ = combineLatest([
+      this.chatId$,
+      this.selectedUserId$,
+    ]).subscribe(([chatId, userId]) => {
+      if (chatId && userId && !this.chatJoined) {
+        this.chatId = chatId;
+        this.chatFacade.joinChat(chatId, userId);
+        this.chatJoined = true;
       }
     });
 
@@ -68,6 +90,15 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }, 10);
   }
+
+  public openAddUserDialog() {
+    this.dialog.open(AddUserComponent, {
+      data: {
+        chatId: this.chatId,
+      },
+    });
+  }
+
 
   public sendMessage() {
     this.chatFacade.sendMessage(this.chatForm.controls.content.value);

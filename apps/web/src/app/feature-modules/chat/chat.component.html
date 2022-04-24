@@ -1,8 +1,13 @@
 <div [hidden]="!(chat$ | async)" class="chat-container" [style.height.px]="screenHeight - 200">
-  <div class="header"t>
+  <div class="header">
     <h3>
       {{(chat$ | async)?.name}}
     </h3>
+
+    <button mat-button [matMenuTriggerFor]="menu" style="margin-right: 10px">...</button>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item (click)="openAddUserDialog()">Add user to chat</button>
+    </mat-menu>
   </div>
 
   <div class="messages-container" #messageContainer>

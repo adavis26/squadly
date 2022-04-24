@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 import { ChatService } from './services/chat.service';
 import { ChatSocketService } from './services/chat.socket.service';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +20,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/auth.interceptor';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 const matModules = [
   MatInputModule,
@@ -30,11 +32,17 @@ const matModules = [
   MatGridListModule,
   ReactiveFormsModule,
   MatDialogModule,
-  MatCardModule
+  MatCardModule,
+  MatMenuModule,
 ];
 
 @NgModule({
-  declarations: [NavComponent, GetUserPipe, CreateChatComponent],
+  declarations: [
+    NavComponent,
+    GetUserPipe,
+    CreateChatComponent,
+    AddUserComponent,
+  ],
   imports: [
     CommonModule,
     ...matModules,
@@ -46,7 +54,7 @@ const matModules = [
           return localStorage.getItem('access_token');
         },
       },
-    })
+    }),
   ],
   providers: [
     ChatService,
@@ -65,6 +73,7 @@ const matModules = [
     CreateChatComponent,
     GetUserPipe,
     MatDialogModule,
+    AddUserComponent
   ],
 })
 export class SharedModule {}

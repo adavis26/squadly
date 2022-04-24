@@ -21,6 +21,20 @@ export class ChatEffects {
     )
   );
 
+  joinChat$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.joinChat),
+      mergeMap((payload) => {
+        try {
+          this.chatSocketService.joinChat(payload.chatId, payload.userId);
+          return of(ChatActions.joinChatSuccess());
+        } catch (error) {
+          return of(ChatActions.joinChatFail({ error }));
+        }
+      })
+    )
+  );
+
   sendMessage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.sendMessage),
@@ -47,6 +61,22 @@ export class ChatEffects {
     )
   );
 
+  deleteChat$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.deleteChat),
+      mergeMap(({ chatId }) =>
+        this.chatService.deleteChat(chatId).pipe(
+          map((deletedResponse) =>
+            ChatActions.deleteChatSuccess({
+              chatId: deletedResponse.chatDeleted.id,
+            })
+          ),
+          catchError((error) => of(ChatActions.deleteChatFail({ error })))
+        )
+      )
+    )
+  );
+
   getChatsUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ChatActions.getChatsUser),
@@ -54,6 +84,18 @@ export class ChatEffects {
         this.chatService.getChatsUser(userId).pipe(
           map((chats) => ChatActions.getChatsUserSuccess({ chats })),
           catchError((error) => of(ChatActions.getChatsUserFail({ error })))
+        )
+      )
+    )
+  );
+
+  addUserToChat$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ChatActions.addUserToChat),
+      mergeMap(({ userId, chatId }) =>
+        this.chatService.addUserToChat(chatId, userId).pipe(
+          map((members) => ChatActions.addUserToChatSuccess({ members })),
+          catchError((error) => of(ChatActions.addUserToChatFail({ error })))
         )
       )
     )

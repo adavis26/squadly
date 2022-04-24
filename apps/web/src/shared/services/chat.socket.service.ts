@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { IChat, MESSAGE, MessageDTO } from '../../../../../libs/core/src';
+import { CHAT, IChat, MESSAGE, MessageDTO } from '../../../../../libs/core/src';
 import { ChatFacade } from '../../app/feature-modules/chat/+state/chat.facade';
 import { Message } from '../../../../../libs/core/src';
 import { Socket } from 'ngx-socket-io';
@@ -35,16 +35,20 @@ export class ChatSocketService implements OnDestroy {
     });
   }
 
+  public joinChat(chatId: number, userId: number): void {
+    console.log("joining", chatId, "with", userId)
+    this.socket.emit(CHAT.JOIN, { userId, chatId });
+  }
+
   public sendMessage(content: string): void {
     this.sub$ = combineLatest([this.chat$, this.userId$])
       .pipe(take(1))
       .subscribe(([chat, userId]) => {
-        const message: MessageDTO = {
+        this.socket.emit(MESSAGE.SEND, {
           content,
           userId,
           chatId: chat.id,
-        };
-        this.socket.emit(MESSAGE.SEND, message);
+        } as MessageDTO);
       });
   }
 }
