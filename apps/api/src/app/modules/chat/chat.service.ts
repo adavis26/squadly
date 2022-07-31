@@ -1,31 +1,27 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Chat } from '../../database/entities/chat.entity';
 import { Repository } from 'typeorm';
 import { CreateChatDTO, IChat, MessageDTO } from '@squadly/core';
-import { Message } from '../../database/entities/messages.entity';
 import { PrismaService } from 'app/database/prisma.service';
 import {
-  Chat as ChatModel,
-  ChatMembers,
+  chats,
   prisma,
   PrismaClient,
+  messages,
+  chat_members,
 } from '@prisma/client';
 import { UsersService } from '../users/users.service';
-import { Messages } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
   constructor(
-    @InjectRepository(Message)
-    private readonly messagesRepository: Repository<Message>,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
     private readonly prismaService: PrismaService
   ) {}
 
   public async createChat(chatDTO: CreateChatDTO, userId: number) {
-    const createdChat: Partial<Chat> = await this.prismaService.chat.create({
+    const createdChat: Partial<chats> = await this.prismaService.chats.create({
       data: {
         name: chatDTO.name,
         members: {
@@ -38,7 +34,7 @@ export class ChatService {
       },
     });
 
-    return await this.prismaService.chat.findUnique({
+    return await this.prismaService.chats.findUnique({
       where: {
         id: createdChat.id,
       },
@@ -48,8 +44,8 @@ export class ChatService {
     });
   }
 
-  public async getChat(chatId: number): Promise<ChatModel> {
-    return this.prismaService.chat
+  public async getChat(chatId: number): Promise<chats> {
+    return this.prismaService.chats
       .findUnique({
         where: { id: chatId },
         include: {
@@ -64,7 +60,7 @@ export class ChatService {
   }
 
   public async deleteChat(chatId: number): Promise<any> {
-    const deleteChatMembers = this.prismaService.chatMembers.deleteMany({
+    const deleteChatMembers = this.prismaService.chat_members.deleteMany({
       where: {
         chatId: chatId,
       },
@@ -76,7 +72,7 @@ export class ChatService {
       },
     });
 
-    const deleteChat = this.prismaService.chat.delete({
+    const deleteChat = this.prismaService.chats.delete({
       where: {
         id: chatId,
       },
@@ -96,9 +92,9 @@ export class ChatService {
     };
   }
 
-  public async getChatsByUserId(userId: number): Promise<ChatModel[]> {
-    const chatsMembers: ChatMembers[] =
-      await this.prismaService.chatMembers.findMany({
+  public async getChatsByUserId(userId: number): Promise<chats[]> {
+    const chatsMembers: chat_members[] =
+      await this.prismaService.chat_members.findMany({
         where: {
           userId,
         },
@@ -109,7 +105,7 @@ export class ChatService {
   }
 
   public async getChats(chatIds: number[]) {
-    return this.prismaService.chat.findMany({
+    return this.prismaService.chats.findMany({
       where: {
         id: {
           in: chatIds,
@@ -118,19 +114,19 @@ export class ChatService {
     });
   }
 
-  public async getMessage(messageId: number): Promise<ChatModel> {
-    return await this.prismaService.chat.findUnique({
+  public async getMessage(messageId: number): Promise<chats> {
+    return await this.prismaService.chats.findUnique({
       where: {
         id: messageId,
       },
     });
   }
 
-  public async getMessages(chatId: number): Promise<Message[]> {
-    return await this.messagesRepository.find();
+  public async getMessages(chatId: number): Promise<messages[]> {
+    return await this.prismaService.messages.findMany({ where: { chatId } });
   }
 
-  public async saveMessage(message: MessageDTO): Promise<Messages> {
+  public async saveMessage(message: MessageDTO): Promise<messages> {
     return await this.prismaService.messages.create({
       data: message,
     });
@@ -148,7 +144,7 @@ export class ChatService {
   }
 
   public async addUserToChat(chatId: number, userId: number) {
-    await this.prismaService.chatMembers.create({
+    await this.prismaService.chat_members.create({
       data: {
         chatId,
         userId,
@@ -156,7 +152,7 @@ export class ChatService {
     });
   }
 
-  private async getChatMembers(members: ChatMembers[]) {
+  private async getChatMembers(members: chat_members[]) {
     const userIds = members.map((row) => row.userId);
     return await this.usersService.getUsersByIds(userIds);
   }

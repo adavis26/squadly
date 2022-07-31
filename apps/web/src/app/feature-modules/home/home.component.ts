@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   public deleteChat(chatId: number): void {
+    
     this.chatFacade.deleteChat(chatId);
   }
 }

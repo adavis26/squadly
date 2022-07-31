@@ -15,7 +15,7 @@ import {
   AddUserToChatDTO,
   CreateUserDTO,
 } from '../../../../../../libs/core/src/';
-import { User as UserModel } from '@prisma/client';
+import { users } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { ChatService } from '../chat/chat.service';
@@ -46,7 +46,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   public async getUser(
     @Param('id', ParseIntPipe) userId: number
-  ): Promise<Partial<UserModel>> {
+  ): Promise<Partial<users>> {
     return await this.usersService.getUserById(userId);
   }
 

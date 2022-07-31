@@ -10,7 +10,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
     this.$use(async (params, next) => {
       // Check incoming query type
-      if (params.model == 'User') {
+      if (params.model == 'users') {
         if (params.action == 'create') {
           params.args.data = {
             ...params.args.data,

@@ -5,30 +5,20 @@
     </button>
   </div>
   <div class="chats-container">
-    <mat-card
-      *ngFor="let chat of chats$ | async"
-      style="max-width: 70%; margin-top: 1vh"
-    >
-      <div style="display: flex; justify-content: space-between">
-        <p
-          [routerLink]="['chat', chat.id]"
-          routerLinkActive="router-link-active"
-        >
+    <mat-card *ngFor="let chat of chats$ | async" class="chat-card">
+      <div class="chat-content" [routerLink]="['chat', chat.id]" routerLinkActive="router-link-active">
+        <p>
           {{ chat.name }}
         </p>
-        <button
-          class="settings-container"
-          mat-button
-          [matMenuTriggerFor]="menu"
-        >
-          ...
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="deleteChat(chat.id)">
-            delete chat
-          </button>
-        </mat-menu>
       </div>
+      <button class="settings-container" mat-button [matMenuTriggerFor]="menu"  class="chat-dropdown">
+        ...
+      </button>
+      <mat-menu #menu="matMenu" >
+        <button mat-menu-item (click)="deleteChat(chat.id)">
+          delete chat
+        </button>
+      </mat-menu>
     </mat-card>
   </div>
 </div>

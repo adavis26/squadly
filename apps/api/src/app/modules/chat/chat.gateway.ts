@@ -12,7 +12,6 @@ import { MessageDTO } from '../../../../../../libs/core/src/lib/interfaces';
 import { ChatService } from './chat.service';
 import { Server, Socket } from 'socket.io';
 import { PrismaService } from 'app/database/prisma.service';
-import { Messages } from '@prisma/client';
 import { Logger } from '@nestjs/common';
 import { CHAT, MESSAGE } from '../../../../../../libs/core/src/';
 

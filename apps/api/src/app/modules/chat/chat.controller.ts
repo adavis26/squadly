@@ -9,11 +9,9 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { Message } from '../../database/entities/messages.entity';
 import { ChatService } from './chat.service';
 import { IChat, CreateChatDTO } from '@squadly/core';
-import { Chat } from 'app/database/entities/chat.entity';
-import { Chat as ChatModel } from '@prisma/client';
+import { chats } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { User } from 'app/core/decorators/user.decorator';
 
@@ -23,7 +21,7 @@ export class ChatController {
 
   @Get(':chatId')
   @UseGuards(JwtAuthGuard)
-  async getChat(@Param('chatId', ParseIntPipe) id: number): Promise<ChatModel> {
+  async getChat(@Param('chatId', ParseIntPipe) id: number): Promise<chats> {
     return await this.chatService.getChat(id);
   }
 

@@ -5,6 +5,28 @@
   flex-direction: column;
 }
 
-.chat-card {
+.chats-container {
+  display: grid;
+  width: 90%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin: 0 10% 0 10%;
+}
+
+.chat-content {
+  height: 100px;
   cursor: pointer;
+  width: 100%;
+}
+
+.chat-card {
+  max-width: 70%;
+  margin-top: 1vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-dropdown {
+  height: 40px;
 }

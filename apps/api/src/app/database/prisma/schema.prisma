@@ -7,38 +7,39 @@ datasource db {
   url      = env("DB_URL")
 }
 
-model User {
-  id        Int           @id @default(autoincrement())
-  username  String        @unique
-  email     String        @unique
+model users {
+  id        Int            @id @default(autoincrement())
+  username  String         @unique
+  email     String         @unique
   firstName String
   lastName  String
   password  String
-  Chats     ChatMembers[]
-  Messages  Messages[]
+  Chats     chat_members[]
+  Messages  messages[]
 }
 
-model Messages {
-  id     Int  @id @default(autoincrement())
+model messages {
+  id      Int    @id @default(autoincrement())
   content String
-  chatId Int
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId  Int
+  userId  Int
+  read    Int[]
+  user    users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chat    chats   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 }
 
-model Chat {
-  id       Int           @id @default(autoincrement())
+model chats {
+  id       Int            @id @default(autoincrement())
   name     String
-  members  ChatMembers[]
-  messages Messages[]
+  members  chat_members[]
+  messages messages[]
 }
 
-model ChatMembers {
+model chat_members {
   chatId Int
   userId Int
-  chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chat   chats  @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user   users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([chatId, userId])
 }
