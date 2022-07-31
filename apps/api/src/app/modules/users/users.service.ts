@@ -25,13 +25,13 @@ export class UsersService {
   public async searchUser(query: string) {
     return await this.userRepository.find({
       where: [
-        { first_name: ILike(`%${query}%`) },
-        { last_name: ILike(`%${query}%`) },
+        { firstName: ILike(`%${query}%`) },
+        { lastName: ILike(`%${query}%`) },
       ],
     });
   }
 
-  public async getUserById(userId: number): Promise<UserModel> {
+  public async getUserById(userId: number): Promise<Partial<UserModel>> {
     return await this.prismaService.user.findUnique({
       where: { id: userId },
       select: {
@@ -45,7 +45,7 @@ export class UsersService {
     });
   }
 
-  public async getUsersByIds(userIds: number[]): Promise<UserModel[]> {
+  public async getUsersByIds(userIds: number[]): Promise<Partial<UserModel>[]> {
     return this.prismaService.user.findMany({
       where: {
         id: { in: userIds },
@@ -72,7 +72,9 @@ export class UsersService {
 
   public async addUserToChat(payload: AddUserToChatDTO) {
     const chatToAdd = await this.chatService.getChat(payload.chatId);
-    const user = await this.userRepository.findOne(payload.userId);
+    const user = await this.userRepository.findOne({
+      where: { id: payload.userId },
+    });
 
     return await this.userRepository.save({
       ...user,

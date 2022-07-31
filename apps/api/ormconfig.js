@@ -16,7 +16,7 @@ const config = {
     migrationsDir: '/src/app/database/migrations/',
   },
   logging: true,
-  logNotifications: true
+  logNotifications: true,
 };
 
 module.exports = config;

@@ -6,10 +6,10 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
 import { NxModule, DataPersistence } from '@nrwl/angular';
-import { hot } from '@nrwl/angular/testing';
 
 import { ChatEffects } from './chat.effects';
 import * as ChatActions from './chat.actions';
+import { hot } from 'jasmine-marbles';
 
 describe('ChatEffects', () => {
   let actions: Observable<any>;

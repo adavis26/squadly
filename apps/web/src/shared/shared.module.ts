@@ -73,7 +73,7 @@ const matModules = [
     CreateChatComponent,
     GetUserPipe,
     MatDialogModule,
-    AddUserComponent
+    AddUserComponent,
   ],
 })
 export class SharedModule {}

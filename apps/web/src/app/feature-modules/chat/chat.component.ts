@@ -7,9 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,7 +42,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   public joinSub$: Subscription;
 
   // form
-  public chatForm: FormGroup;
+  public chatForm: UntypedFormGroup;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -52,7 +52,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     private chatFacade: ChatFacade,
     private authFacade: AuthFacade,
-    private readonly fb: FormBuilder,
+    private readonly fb: UntypedFormBuilder,
     public dialog: MatDialog
   ) {
     this.screenHeight = window.innerHeight;
@@ -81,13 +81,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
 
     this.chatForm = this.fb.group({
-      content: new FormControl('', [Validators.required]),
+      content: new UntypedFormControl('', [Validators.required]),
     });
   }
 
   public autoScroll(): void {
     setTimeout(() => {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+      this.messageContainer.nativeElement.scrollTop =
+        this.messageContainer.nativeElement.scrollHeight;
     }, 10);
   }
 
@@ -98,7 +99,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       },
     });
   }
-
 
   public sendMessage() {
     this.chatFacade.sendMessage(this.chatForm.controls.content.value);

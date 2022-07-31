@@ -4,7 +4,7 @@ export enum MESSAGE {
 }
 
 export enum CHAT {
-  JOIN = "chat:join",
-  LEAVE = "chat:leave",
-  TEMPLATE = "chat:"
+  JOIN = 'chat:join',
+  LEAVE = 'chat:leave',
+  TEMPLATE = 'chat:',
 }

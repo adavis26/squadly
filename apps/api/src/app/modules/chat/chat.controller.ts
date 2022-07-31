@@ -23,7 +23,7 @@ export class ChatController {
 
   @Get(':chatId')
   @UseGuards(JwtAuthGuard)
-  async getChat(@Param('chatId', ParseIntPipe) id: number): Promise<Chat> {
+  async getChat(@Param('chatId', ParseIntPipe) id: number): Promise<ChatModel> {
     return await this.chatService.getChat(id);
   }
 
@@ -44,9 +44,7 @@ export class ChatController {
 
   @Delete(':chatId')
   @UseGuards(JwtAuthGuard)
-  public async deleteChat(
-    @Param('chatId', ParseIntPipe) chatId: number
-  ) {
+  public async deleteChat(@Param('chatId', ParseIntPipe) chatId: number) {
     return await this.chatService.deleteChat(chatId);
   }
 }

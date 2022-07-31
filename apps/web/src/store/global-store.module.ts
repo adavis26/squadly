@@ -9,9 +9,9 @@ import { AuthFacade } from './auth/auth.facade';
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer)
+    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
   ],
   declarations: [],
-  providers: [AuthFacade]
+  providers: [AuthFacade],
 })
 export class GlobalStoreModule {}

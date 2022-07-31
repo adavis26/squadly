@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Module } from '@nestjs/common';
 
-@NgModule({
-  imports: [CommonModule],
+@Module({
+  imports: [],
 })
 export class CoreModule {}

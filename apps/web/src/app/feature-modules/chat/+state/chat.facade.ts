@@ -54,6 +54,6 @@ export class ChatFacade {
   }
 
   public addUserToChat(chatId: number, userId: number): void {
-    this.store.dispatch(ChatActions.addUserToChat({chatId, userId}))
+    this.store.dispatch(ChatActions.addUserToChat({ chatId, userId }));
   }
 }

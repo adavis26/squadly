@@ -11,14 +11,17 @@ import { Observable } from 'rxjs';
 })
 export class NavComponent implements OnInit {
   public user$: Observable<User>;
-  constructor(private readonly authFacade: AuthFacade, private readonly router: Router) {}
+  constructor(
+    private readonly authFacade: AuthFacade,
+    private readonly router: Router
+  ) {}
 
   ngOnInit() {
     this.user$ = this.authFacade.user$;
   }
 
-  public logout(){
+  public logout() {
     this.authFacade.logout();
-    this.router.navigate(['/login'])
+    this.router.navigate(['/login']);
   }
 }

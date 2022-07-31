@@ -46,16 +46,15 @@ export class AuthService {
     return this.http.post<User>(this.userurl, user).pipe(map((data) => data));
   }
 
-  public verify(): Observable<User>{
-    return this.http.get<User>(`${this.authurl}/verify`)
+  public verify(): Observable<User> {
+    return this.http.get<User>(`${this.authurl}/verify`);
   }
 
   public logout(): Observable<any> {
     localStorage.removeItem('access_token');
-    document.cookie = ""
+    document.cookie = '';
     this.router.navigate(['login']);
 
-
-    return of(true)
+    return of(true);
   }
 }

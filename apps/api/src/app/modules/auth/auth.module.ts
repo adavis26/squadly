@@ -28,6 +28,6 @@ import { JwtAuthGuard } from './auth.guard';
     ChatService,
     AuthStrategy,
     JwtStrategy,
-  ]
+  ],
 })
 export class AuthModule {}

@@ -6,10 +6,7 @@ import { ChatModule } from './modules/chat/chat.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
-import { JwtStrategy } from './modules/auth/auth.strategy';
-import { JwtAuthGuard } from './modules/auth/auth.guard';
-import { APP_GUARD} from '@nestjs/core';
-import { ClientsModule, Transport} from '@nestjs/microservices' 
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -33,8 +30,9 @@ import { ClientsModule, Transport} from '@nestjs/microservices'
         name: 'MATH_SERVICE',
         transport: Transport.REDIS,
         options: {
-          url: 'redis://localhost:6379',
-        }
+          host: 'localhost',
+          port: 6379,
+        },
       },
     ]),
   ],
