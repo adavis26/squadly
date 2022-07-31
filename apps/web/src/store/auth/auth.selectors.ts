@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AUTH_FEATURE_KEY, State, ChatPartialState } from './auth.reducer';
 
-export const getAuthState = createFeatureSelector<ChatPartialState, State>(
+export const getAuthState = createFeatureSelector< State>(
   AUTH_FEATURE_KEY
 );
 
