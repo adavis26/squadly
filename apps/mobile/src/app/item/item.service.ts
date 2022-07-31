@@ -27,17 +27,19 @@ export class ItemService {
   }
 
   public getChats() {
-    const options = this.getHeaders()
-    return this.http.get<IShortChat>('http://localhost:4200/api/user/1/chats', {headers: options});
+    const options = this.getHeaders();
+    return this.http.get<IShortChat>('http://localhost:4200/api/user/1/chats', {
+      headers: options,
+    });
   }
 
   private getHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization':
+      Authorization:
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjUwODI4OTY1fQ.pTNOLjPDd__sjlw3_KjkDFNx8l4Cl8AxNM9g7F3VOnw',
     });
-    console.log(headers)
+    console.log(headers);
     return headers;
   }
 }

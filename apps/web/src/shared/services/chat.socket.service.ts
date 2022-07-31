@@ -36,7 +36,7 @@ export class ChatSocketService implements OnDestroy {
   }
 
   public joinChat(chatId: number, userId: number): void {
-    console.log("joining", chatId, "with", userId)
+    console.log('joining', chatId, 'with', userId);
     this.socket.emit(CHAT.JOIN, { userId, chatId });
   }
 

@@ -9,12 +9,7 @@ import { AuthEffects } from 'apps/web/src/store/auth/auth.effects';
 import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    GlobalStoreModule
-  ],
-  declarations: [LoginComponent, SignUpComponent]
+  imports: [CommonModule, SharedModule, RouterModule, GlobalStoreModule],
+  declarations: [LoginComponent, SignUpComponent],
 })
-export class LoginModule { }
+export class LoginModule {}

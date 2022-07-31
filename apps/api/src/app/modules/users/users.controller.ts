@@ -50,7 +50,6 @@ export class UsersController {
     return await this.usersService.getUserById(userId);
   }
 
-
   @Get('/:id/chats')
   @UseGuards(JwtAuthGuard)
   public async getUserChats(@Param('id', ParseIntPipe) userId: number) {

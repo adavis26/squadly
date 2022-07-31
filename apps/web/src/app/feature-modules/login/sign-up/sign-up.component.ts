@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CreateUserDTO } from 'libs/core/src/';
 import { AuthFacade } from 'apps/web/src/store/auth/auth.facade';
 
@@ -9,11 +9,11 @@ import { AuthFacade } from 'apps/web/src/store/auth/auth.facade';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
-  public userForm: FormGroup;
+  public userForm: UntypedFormGroup;
 
   constructor(
     private readonly authFacade: AuthFacade,
-    private readonly fb: FormBuilder
+    private readonly fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {
@@ -22,11 +22,11 @@ export class SignUpComponent implements OnInit {
 
   public initForm() {
     this.userForm = this.fb.group({
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      email: new FormControl(),
-      username: new FormControl(),
-      password: new FormControl(),
+      firstName: new UntypedFormControl(),
+      lastName: new UntypedFormControl(),
+      email: new UntypedFormControl(),
+      username: new UntypedFormControl(),
+      password: new UntypedFormControl(),
     });
   }
 

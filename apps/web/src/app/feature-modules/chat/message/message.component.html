@@ -1,8 +1,15 @@
-<mat-card class="message" [class.user-message]="message.userId === currentUserId">
-  <div style="display: flex; flex-direction: column;">
-    <p>{{user.firstName | titlecase}} {{user.lastName | titlecase}}</p>
-    <p>{{message?.content}}</p>
+<mat-card
+  class="message"
+  [class.user-message]="message.userId === currentUserId"
+>
+  <div style="display: flex; flex-direction: column">
+    <p>{{ user.firstName | titlecase }} {{ user.lastName | titlecase }}</p>
+    <p>{{ message?.content }}</p>
   </div>
 </mat-card>
-<p style="font-size: xx-small;" [style.text-align]="message.userId === currentUserId ? 'right' : ''">
-  {{message.timestamp | date: 'shortTime'}}</p>
+<p
+  style="font-size: xx-small"
+  [style.text-align]="message.userId === currentUserId ? 'right' : ''"
+>
+  {{ message.timestamp | date: 'shortTime' }}
+</p>

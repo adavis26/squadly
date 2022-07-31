@@ -11,9 +11,8 @@ describe('CreateChatComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateChatComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateChatComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

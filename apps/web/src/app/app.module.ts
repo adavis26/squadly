@@ -11,7 +11,6 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { HttpService } from '@nestjs/common';
 import { SocketIoModule } from 'ngx-socket-io';
 import { AuthFacade } from '../store/auth/auth.facade';
 import { AuthEffects } from '../store/auth/auth.effects';
@@ -44,7 +43,7 @@ import { GlobalStoreModule } from '../store/global-store.module';
     LoginModule,
     GlobalStoreModule,
   ],
-  providers: [HttpService, AuthFacade],
+  providers: [ AuthFacade],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

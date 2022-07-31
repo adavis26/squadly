@@ -8,7 +8,6 @@ import { User } from './entities/users.entity';
 @Injectable()
 export class DatabaseService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
-
     return {
       ...ormconfig,
       entities: [Chat, Message, User],

@@ -1,5 +1,10 @@
 <ActionBar title="squadly"> </ActionBar>
 
 <StackLayout height="90%">
-  <Label *ngFor="let chat of chats | async;" [text]="chat | json" textWrap="true" height="40"></Label>
+  <Label
+    *ngFor="let chat of chats | async"
+    [text]="chat | json"
+    textWrap="true"
+    height="40"
+  ></Label>
 </StackLayout>

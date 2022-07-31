@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -16,10 +16,10 @@ import { CreateChatDTO } from 'libs/core/src';
   styleUrls: ['./create-chat.component.scss'],
 })
 export class CreateChatComponent implements OnInit {
-  public createChatForm: FormGroup;
+  public createChatForm: UntypedFormGroup;
   constructor(
     public dialogRef: MatDialogRef<HomeComponent>, // @Inject(MAT_DIALOG_DATA) public data: DialogData
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     public chatFacade: ChatFacade
   ) {}
 
@@ -29,7 +29,7 @@ export class CreateChatComponent implements OnInit {
 
   public initForm(): void {
     this.createChatForm = this.fb.group({
-      name: new FormControl('', [Validators.required]),
+      name: new UntypedFormControl('', [Validators.required]),
     });
   }
 

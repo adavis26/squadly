@@ -26,7 +26,7 @@ export class ChatMembers1642976097815 implements MigrationInterface {
       }),
       true,
       true,
-      true 
+      true
     );
   }
 

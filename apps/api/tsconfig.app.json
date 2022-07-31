@@ -6,7 +6,7 @@
     "types": ["node"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ESNext",
+    "target": "es2015",
     "module": "CommonJS",
     "paths": {
       "@squadly/core": ["../../../libs/core/src/index.ts"]

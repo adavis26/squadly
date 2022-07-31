@@ -1,9 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CHAT_FEATURE_KEY, State, ChatPartialState } from './chat.reducer';
 
-export const getChatState = createFeatureSelector< State>(
-  CHAT_FEATURE_KEY
-);
+export const getChatState = createFeatureSelector<State>(CHAT_FEATURE_KEY);
 
 export const getChatLoaded = createSelector(
   getChatState,
@@ -29,7 +27,6 @@ export const getSelectedChatId = createSelector(
   getChatState,
   (state: State) => state.selectedChat?.id
 );
-
 
 export const getUser = createSelector(
   getChatState,

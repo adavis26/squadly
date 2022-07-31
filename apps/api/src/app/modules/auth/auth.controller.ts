@@ -15,7 +15,7 @@ import { JwtAuthGuard, LocalAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { UsersService } from '../users/users.service';
-import {User} from '../../core/decorators/user.decorator'
+import { User } from '../../core/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {

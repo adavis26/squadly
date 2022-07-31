@@ -12,6 +12,7 @@ import {
   PrismaClient,
 } from '@prisma/client';
 import { UsersService } from '../users/users.service';
+import { Messages } from '@prisma/client';
 
 @Injectable()
 export class ChatService {
@@ -47,7 +48,7 @@ export class ChatService {
     });
   }
 
-  public async getChat(chatId: number): Promise<Chat> {
+  public async getChat(chatId: number): Promise<ChatModel> {
     return this.prismaService.chat
       .findUnique({
         where: { id: chatId },
@@ -81,15 +82,12 @@ export class ChatService {
       },
     });
 
-    const [
-      messagesDeletedCount,
-      membersDeletedCount,
-      chatDeleted,
-    ] = await this.prismaService.$transaction([
-      deleteMessages,
-      deleteChatMembers,
-      deleteChat,
-    ]);
+    const [messagesDeletedCount, membersDeletedCount, chatDeleted] =
+      await this.prismaService.$transaction([
+        deleteMessages,
+        deleteChatMembers,
+        deleteChat,
+      ]);
 
     return {
       messagesDeletedCount,
@@ -99,13 +97,12 @@ export class ChatService {
   }
 
   public async getChatsByUserId(userId: number): Promise<ChatModel[]> {
-    const chatsMembers: ChatMembers[] = await this.prismaService.chatMembers.findMany(
-      {
+    const chatsMembers: ChatMembers[] =
+      await this.prismaService.chatMembers.findMany({
         where: {
           userId,
         },
-      }
-    );
+      });
 
     const chatIds = chatsMembers.map((chatMember) => chatMember.chatId);
     return await this.getChats(chatIds);
@@ -121,7 +118,7 @@ export class ChatService {
     });
   }
 
-  public async getMessage(messageId: number): Promise<Message> {
+  public async getMessage(messageId: number): Promise<ChatModel> {
     return await this.prismaService.chat.findUnique({
       where: {
         id: messageId,
@@ -133,17 +130,21 @@ export class ChatService {
     return await this.messagesRepository.find();
   }
 
-  public async saveMessage(message: MessageDTO): Promise<Message> {
-    const chat: Chat = await this.getChat(message.chatId);
-    const entity: Partial<Message> = {
-      ...message,
-      timestamp: new Date(),
-      chat,
-    };
+  public async saveMessage(message: MessageDTO): Promise<Messages> {
+    return await this.prismaService.messages.create({
+      data: message,
+    });
 
-    const savedEntity = await this.messagesRepository.save(entity);
+    // const chat: ChatModel = await this.getChat(message.chatId);
+    // const entity: Partial<Message> = {
+    //   ...message,
+    //   timestamp: new Date(),
+    //   chat,
+    // };
 
-    return await this.getMessage(savedEntity.id);
+    // const savedEntity = await this.messagesRepository.save(entity);
+
+    // return await this.getMessage(savedEntity.id);
   }
 
   public async addUserToChat(chatId: number, userId: number) {

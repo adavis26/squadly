@@ -10,7 +10,7 @@ import {
 } from '@nestjs/websockets';
 import { MessageDTO } from '../../../../../../libs/core/src/lib/interfaces';
 import { ChatService } from './chat.service';
-import { Client, Server, Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { PrismaService } from 'app/database/prisma.service';
 import { Messages } from '@prisma/client';
 import { Logger } from '@nestjs/common';
@@ -18,7 +18,8 @@ import { CHAT, MESSAGE } from '../../../../../../libs/core/src/';
 
 @WebSocketGateway({ cors: true })
 export class ChatGateway
-  implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
+  implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
+{
   public logger = new Logger(ChatGateway.name);
 
   constructor(
@@ -42,7 +43,7 @@ export class ChatGateway
     const responseMessage = await this.prismaService.messages.create({
       data: message,
     });
-    
+
     await this.ws
       .to(`${CHAT.TEMPLATE}${message.chatId}`)
       .emit(MESSAGE.RECIEVE, responseMessage);
@@ -63,7 +64,7 @@ export class ChatGateway
     this.logger.log(`User connected - ${client.id}`);
   }
 
-  handleDisconnect(client: Client) {
+  handleDisconnect(client) {
     this.logger.log(`User disconnected - ${client.id}`);
   }
 
@@ -72,6 +73,6 @@ export class ChatGateway
   }
 
   private log(pattern: string, msg: string) {
-    this.logger.log(`[${pattern}] ${msg}`)
+    this.logger.log(`[${pattern}] ${msg}`);
   }
 }

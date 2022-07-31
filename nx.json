@@ -22,24 +22,8 @@
       }
     }
   },
-  "projects": {
-    "web": {
-      "tags": []
-    },
-    "web-e2e": {
-      "tags": [],
-      "implicitDependencies": ["web"]
-    },
-    "api": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    }
-  },
   "paths": {
-    "@core": [
-      "libs/core/src/*"
-    ]
-  }
+    "@core": ["libs/core/src/*"]
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

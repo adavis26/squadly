@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,12 +15,12 @@ import { combineLatest, Subscription } from 'rxjs';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public loginSub$: Subscription;
 
   constructor(
     private readonly authFacade: AuthFacade,
-    private readonly fb: FormBuilder,
+    private readonly fb: UntypedFormBuilder,
     private readonly rotuer: Router
   ) {}
 
@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public initForm(): void {
     this.loginForm = this.fb.group({
-      username: new FormControl(null, [Validators.required]),
-      password: new FormControl(null, [Validators.required]),
+      username: new UntypedFormControl(null, [Validators.required]),
+      password: new UntypedFormControl(null, [Validators.required]),
     });
   }
 
