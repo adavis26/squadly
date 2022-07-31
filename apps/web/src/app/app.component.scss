@@ -1,4 +1,10 @@
+$nav-offset: 50px;
+
 body {
-  height: calc(100vh - 50px);
+  height: calc(100vh - $nav-offset);
   overflow-y: hidden;
+}
+
+.router-container {
+  padding-top: 100px;
 }

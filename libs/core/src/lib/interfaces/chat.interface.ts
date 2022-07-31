@@ -4,15 +4,21 @@ import { User } from './user.interface';
 export interface IChat {
   messages: Message[];
   members: User[];
-  chatId: number;
+  id: number;
   name: string;
 }
 
 export interface IShortChat {
-  chatId: number;
+  id: number;
   name: string;
 }
 
 export interface CreateChatDTO {
   name: string;
+}
+
+export interface DeleteChatResponse {
+  messagesDeletedCount: { count: number };
+  membersDeletedCount: { count: number };
+  chatDeleted: { id: number; name: string };
 }

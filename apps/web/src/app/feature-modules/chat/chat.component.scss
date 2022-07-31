@@ -2,15 +2,13 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  word-break: break-all;
 }
 
 .messages-container {
   padding-right: 5%;
   padding-left: 5%;
-  padding-top: 20px;
-  height: calc(100vh - 150px);
   overflow-y: auto;
-  margin-top: 70px;
 }
 
 .messages-container::-webkit-scrollbar {
@@ -31,12 +29,37 @@
   bottom: 0;
   z-index: 100;
   width: 100%;
-  display: flex;
-  justify-content: center;
 
   mat-form-field {
     width: 80%;
     padding-right: 5%;
     padding-left: 5%;
   }
+
+  input {
+    font-size: 14px;
+    padding-left: 15px;
+    font-size: 18px;
+    width: 75%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+    padding: 10px;
+  }
+  button {
+    margin-left: 25px;
+  }
+}
+
+.header {
+  padding-left: 2rem;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5px;
+  border-bottom-color: lightgrey;
+  display: flex;
+  justify-content: space-between;
 }

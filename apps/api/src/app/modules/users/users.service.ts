@@ -4,32 +4,77 @@ import { User } from '../../database/entities/users.entity';
 import { ILike, Like, Repository } from 'typeorm';
 import { AddUserToChatDTO, CreateUserDTO } from '@squadly/core';
 import { ChatService } from '../chat/chat.service';
+import { PrismaService } from 'app/database/prisma.service';
+import { User as UserModel } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly chatService: ChatService
+    private readonly chatService: ChatService,
+    private readonly prismaService: PrismaService
   ) {}
 
   public async createUser(user: CreateUserDTO) {
-    return await this.userRepository.save(user);
+    return await this.prismaService.user.create({
+      data: user,
+    });
   }
 
   public async searchUser(query: string) {
     return await this.userRepository.find({
-      where: [{ first_name: ILike(`%${query}%`) }, { last_name: ILike(`%${query}%`) }],
+      where: [
+        { firstName: ILike(`%${query}%`) },
+        { lastName: ILike(`%${query}%`) },
+      ],
     });
   }
 
-  public async getUser(userId: number): Promise<User> {
-    return await this.userRepository.findOne(userId, { relations: ['chats'] });
+  public async getUserById(userId: number): Promise<Partial<UserModel>> {
+    return await this.prismaService.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        password: false,
+      },
+    });
+  }
+
+  public async getUsersByIds(userIds: number[]): Promise<Partial<UserModel>[]> {
+    return this.prismaService.user.findMany({
+      where: {
+        id: { in: userIds },
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        password: false,
+      },
+    });
+  }
+
+  public async getUserPassword(
+    username: string
+  ): Promise<{ password: string; id: number }> {
+    return await this.prismaService.user.findUnique({
+      where: { username },
+      select: { password: true, id: true },
+    });
   }
 
   public async addUserToChat(payload: AddUserToChatDTO) {
     const chatToAdd = await this.chatService.getChat(payload.chatId);
-    const user = await this.userRepository.findOne(payload.userId);
+    const user = await this.userRepository.findOne({
+      where: { id: payload.userId },
+    });
 
     return await this.userRepository.save({
       ...user,

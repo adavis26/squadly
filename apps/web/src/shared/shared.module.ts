@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 import { ChatService } from './services/chat.service';
 import { ChatSocketService } from './services/chat.socket.service';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +13,14 @@ import { NavComponent } from './components/nav/nav.component';
 import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { GetUserPipe } from './pipes/get-user.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CreateChatComponent } from './components/create-chat/create-chat.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './interceptors/auth.interceptor';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './guards/auth.guard';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 const matModules = [
   MatInputModule,
@@ -21,12 +30,50 @@ const matModules = [
   MatDividerModule,
   MatCardModule,
   MatGridListModule,
+  ReactiveFormsModule,
+  MatDialogModule,
+  MatCardModule,
+  MatMenuModule,
 ];
 
 @NgModule({
-  declarations: [NavComponent, GetUserPipe],
-  imports: [CommonModule, ...matModules, RouterModule],
-  providers: [ChatService, ChatSocketService],
-  exports: [...matModules, NavComponent, GetUserPipe],
+  declarations: [
+    NavComponent,
+    GetUserPipe,
+    CreateChatComponent,
+    AddUserComponent,
+  ],
+  imports: [
+    CommonModule,
+    ...matModules,
+    RouterModule,
+    JwtModule.forRoot({
+      config: {
+        allowedDomains: ['localhost:4200', 'localhost:'],
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+      },
+    }),
+  ],
+  providers: [
+    ChatService,
+    ChatSocketService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+    JwtHelperService,
+    AuthGuard,
+  ],
+  exports: [
+    ...matModules,
+    NavComponent,
+    CreateChatComponent,
+    GetUserPipe,
+    MatDialogModule,
+    AddUserComponent,
+  ],
 })
 export class SharedModule {}

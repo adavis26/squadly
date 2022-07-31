@@ -1,6 +1,6 @@
 .nav-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 50px;
   position: fixed;
@@ -12,4 +12,8 @@
 .title:hover {
   opacity: 0.8;
   cursor: pointer;
+}
+
+.settings-container {
+  margin-right: 30px;
 }

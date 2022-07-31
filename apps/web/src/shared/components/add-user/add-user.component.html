@@ -1,0 +1,15 @@
+<h3>add user to chat</h3>
+<form [formGroup]="addUserForm" style="display: flex; flex-direction: column">
+  <mat-form-field>
+    <mat-label>user</mat-label>
+    <input formControlName="userId" matInput />
+  </mat-form-field>
+  <button
+    mat-stroked-button
+    type="submit"
+    (click)="addUser()"
+    [disabled]="addUserForm.invalid"
+  >
+    create
+  </button>
+</form>

@@ -1,3 +1,12 @@
 <div class="nav-container">
-  <h1 class="title" [routerLink]="['/']" routerLinkActive="router-link-active" >squadly</h1>
+  <div></div>
+  <h1 [routerLink]="['/']" routerLinkActive="router-link-active" class="title">
+    squadly
+  </h1>
+  <button class="settings-container" mat-button [matMenuTriggerFor]="menu">
+    {{ (user$ | async)?.firstName }}
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">logout</button>
+  </mat-menu>
 </div>

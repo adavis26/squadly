@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
+  CreateChatDTO,
   IChat,
   IShortChat,
   Message,
@@ -21,15 +22,24 @@ export const loadChatFailure = createAction(
   props<{ error: any }>()
 );
 
-export const sendMessage = createAction(
-  '[Chat] Send Message',
-  props<{ message: MessageDTO }>()
+export const joinChat = createAction(
+  '[Chat] Join Chat',
+  props<{ chatId: number; userId: number }>()
 );
 
-export const sendMessageSuccess = createAction(
-  '[Chat] Send Message Success',
-  props<{ message: MessageDTO }>()
+export const joinChatSuccess = createAction('[Chat] Join Chat Success');
+
+export const joinChatFail = createAction(
+  '[Chat] Join Chat Fail',
+  props<{ error: any }>()
 );
+
+export const sendMessage = createAction(
+  '[Chat] Send Message',
+  props<{ content: string }>()
+);
+
+export const sendMessageSuccess = createAction('[Chat] Send Message Success');
 
 export const sendMessageFail = createAction(
   '[Chat] Send Message Fail',
@@ -44,4 +54,66 @@ export const addMessage = createAction(
 export const setUserChats = createAction(
   '[Chat] Set User Chats',
   props<{ chats: IShortChat[] }>()
+);
+
+export const createChat = createAction(
+  '[Chat] Create Chat',
+  props<{ chat: CreateChatDTO }>()
+);
+
+export const createChatSuccess = createAction(
+  '[Chat] Set User Chats',
+  props<{ chat: IShortChat }>()
+);
+
+export const createChatFail = createAction(
+  '[Chat] Set User Chats',
+  props<{ error: any }>()
+);
+
+export const getChatsUser = createAction(
+  '[Chat] Get Chats User',
+  props<{ userId: number }>()
+);
+
+export const getChatsUserSuccess = createAction(
+  '[Chat] Get Chats User Success',
+  props<{ chats: IShortChat[] }>()
+);
+
+export const getChatsUserFail = createAction(
+  '[Chat] Get Chats User Failure',
+  props<{ error: any }>()
+);
+
+export const deleteChat = createAction(
+  '[Chat] Delete Chat',
+  props<{ chatId: number }>()
+);
+
+export const deleteChatSuccess = createAction(
+  '[Chat] Delete Chat Success',
+  props<{ chatId: number }>()
+);
+
+export const deleteChatFail = createAction(
+  '[Chat] Delete Chat Failure',
+  props<{ error: any }>()
+);
+
+export const logout = createAction('[Chat] Logout');
+
+export const addUserToChat = createAction(
+  '[Chat] Add User To Chat',
+  props<{ chatId: number; userId: number }>()
+);
+
+export const addUserToChatSuccess = createAction(
+  '[Chat] Add User To Chat Success',
+  props<{ members: any[] }>()
+);
+
+export const addUserToChatFail = createAction(
+  '[Chat] Add User To Chat Failure',
+  props<{ error: any }>()
 );
