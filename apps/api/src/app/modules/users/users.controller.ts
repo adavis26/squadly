@@ -42,6 +42,11 @@ export class UsersController {
     return await this.usersService.searchUser(query);
   }
 
+  @Get('/search')
+  public async fuzzySearchUsername(@Query('query') query: string) {
+    return await this.usersService.fuzzySearchUsername(query);
+  }
+
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   public async getUser(

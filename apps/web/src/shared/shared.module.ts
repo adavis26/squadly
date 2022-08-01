@@ -21,6 +21,7 @@ import { JwtInterceptor } from './interceptors/auth.interceptor';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const matModules = [
   MatInputModule,
@@ -34,6 +35,7 @@ const matModules = [
   MatDialogModule,
   MatCardModule,
   MatMenuModule,
+  MatAutocompleteModule,
 ];
 
 @NgModule({

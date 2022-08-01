@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AddUserToChatDTO, CreateUserDTO } from '@squadly/core';
 import { ChatService } from '../chat/chat.service';
 import { PrismaService } from 'app/database/prisma.service';
-import { users as UserModel } from '@prisma/client';
+import { users, Prisma } from '@prisma/client';
+import { Sql } from '@prisma/client/runtime';
 
 @Injectable()
 export class UsersService {
@@ -28,7 +29,7 @@ export class UsersService {
     });
   }
 
-  public async getUserById(userId: number): Promise<Partial<UserModel>> {
+  public async getUserById(userId: number): Promise<Partial<users>> {
     return await this.prismaService.users.findUnique({
       where: { id: userId },
       select: {
@@ -42,7 +43,7 @@ export class UsersService {
     });
   }
 
-  public async getUsersByIds(userIds: number[]): Promise<Partial<UserModel>[]> {
+  public async getUsersByIds(userIds: number[]): Promise<Partial<users>[]> {
     return this.prismaService.users.findMany({
       where: {
         id: { in: userIds },
@@ -69,12 +70,12 @@ export class UsersService {
 
   public async addUserToChat(payload: AddUserToChatDTO) {
     return await this.prismaService.chat_members.create({ data: payload });
-    // const chatToAdd = await this.chatService.getChat(payload.chatId);
-    // const user = await this.prismaService.users.findFirst({
-    //   where: { id: payload.userId },
-    // });
+  }
 
-    // return await this.prismaService.users.save({});
+  public async fuzzySearchUsername(query: string): Promise<any> {
+    return await this.prismaService.$queryRawUnsafe(
+      `SELECT id, username, "firstName", "lastName" FROM users WHERE SIMIlARITY(users.username, '${query}') > 0.25 LIMIT 10;`
+    );
   }
 
   public async removeUserFromChat() {}

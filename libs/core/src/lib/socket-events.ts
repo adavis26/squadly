@@ -7,4 +7,5 @@ export enum CHAT {
   JOIN = 'chat:join',
   LEAVE = 'chat:leave',
   TEMPLATE = 'chat:',
+  ADD_USER = 'chat:adduser'
 }

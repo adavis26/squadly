@@ -54,3 +54,6 @@ ALTER TABLE "chat_members" ADD CONSTRAINT "chat_members_userId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "chat_members" ADD CONSTRAINT "chat_members_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "chats"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- add pg_tgrm extension
+CREATE EXTENSION pg_trgm;

@@ -13,7 +13,8 @@ import { ChatService } from './chat.service';
 import { Server, Socket } from 'socket.io';
 import { PrismaService } from 'app/database/prisma.service';
 import { Logger } from '@nestjs/common';
-import { CHAT, MESSAGE } from '../../../../../../libs/core/src/';
+import { CHAT, MESSAGE } from '@squadly/core';
+import { messages } from '@prisma/client';
 
 @WebSocketGateway({ cors: true })
 export class ChatGateway
@@ -39,16 +40,23 @@ export class ChatGateway
     @MessageBody() message: MessageDTO,
     @ConnectedSocket() client: Socket
   ) {
-    const responseMessage = await this.prismaService.messages.create({
+    this.log(MESSAGE.SEND, `${client.id}`);
+    const responseMessage: messages = await this.prismaService.messages.create({
       data: message,
     });
 
+    await this.emitMesage(responseMessage, responseMessage);
+  }
+
+  async emitMesage(message: MessageDTO, responseMessage: messages) {
+    const chatPattern = this.chatPattern(message.chatId)
+    this.log(`${chatPattern}`, `sending message to ${message.chatId}`);
+
     await this.ws
-      .to(`${CHAT.TEMPLATE}${message.chatId}`)
+      .to(chatPattern)
       .emit(MESSAGE.RECIEVE, responseMessage);
   }
 
-  CHAT;
   @SubscribeMessage(CHAT.JOIN)
   async handleJoinChat(
     @MessageBody() payload: { chatId: number; userId: number },
@@ -74,4 +82,7 @@ export class ChatGateway
   private log(pattern: string, msg: string) {
     this.logger.log(`[${pattern}] ${msg}`);
   }
+
+  private chatPattern = (chatId: number | string) =>
+    `${CHAT.TEMPLATE}${chatId}`;
 }

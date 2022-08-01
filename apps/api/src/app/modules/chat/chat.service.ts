@@ -1,6 +1,4 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateChatDTO, IChat, MessageDTO } from '@squadly/core';
 import { PrismaService } from 'app/database/prisma.service';
 import {
@@ -128,19 +126,8 @@ export class ChatService {
 
   public async saveMessage(message: MessageDTO): Promise<messages> {
     return await this.prismaService.messages.create({
-      data: message,
+      data: { ...message, read: [] },
     });
-
-    // const chat: ChatModel = await this.getChat(message.chatId);
-    // const entity: Partial<Message> = {
-    //   ...message,
-    //   timestamp: new Date(),
-    //   chat,
-    // };
-
-    // const savedEntity = await this.messagesRepository.save(entity);
-
-    // return await this.getMessage(savedEntity.id);
   }
 
   public async addUserToChat(chatId: number, userId: number) {

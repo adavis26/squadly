@@ -17,7 +17,6 @@ import { AddUserComponent } from 'apps/web/src/shared/components/add-user/add-us
 import { AuthFacade } from 'apps/web/src/store/auth/auth.facade';
 import { IChat } from 'libs/core/src';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
 import { ChatFacade } from './+state/chat.facade';
 
 @Component({
@@ -94,6 +93,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   public openAddUserDialog() {
     this.dialog.open(AddUserComponent, {
+      width: '50%',
       data: {
         chatId: this.chatId,
       },
@@ -107,5 +107,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.chatSub$.unsubscribe();
+    this.joinSub$.unsubscribe();
   }
 }

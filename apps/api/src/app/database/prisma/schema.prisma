@@ -19,13 +19,15 @@ model users {
 }
 
 model messages {
-  id      Int    @id @default(autoincrement())
-  content String
-  chatId  Int
-  userId  Int
-  read    Int[]
-  user    users   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  chat    chats   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  id        Int      @id @default(autoincrement())
+  content   String
+  chatId    Int
+  userId    Int
+  read      Int[]
+  likes     Int[]
+  timestamp DateTime @default(now())
+  user      users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chat      chats    @relation(fields: [chatId], references: [id], onDelete: Cascade)
 }
 
 model chats {
@@ -38,7 +40,7 @@ model chats {
 model chat_members {
   chatId Int
   userId Int
-  chat   chats  @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chat   chats @relation(fields: [chatId], references: [id], onDelete: Cascade)
   user   users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([chatId, userId])
