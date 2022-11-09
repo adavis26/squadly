@@ -57,7 +57,7 @@
     "@ngrx/entity": "14.0.2",
     "@ngrx/router-store": "14.0.2",
     "@ngrx/store": "14.0.2",
-    "@nrwl/angular": "14.5.1",
+    "@nrwl/angular": "14.8.6",
     "@prisma/client": "^3.15.2",
     "@types/angular-material": "^1.1.72",
     "@types/bcrypt": "^5.0.0",
